@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="@dimen/common_spacing_large"
     tools:context=".MainActivity">
 
     <TextView
@@ -16,12 +16,13 @@
         android:layout_marginEnd="@dimen/common_spacing_medium"
         android:ellipsize="end"
         android:singleLine="true"
-        android:text="@string/author"
         app:layout_constraintBottom_toTopOf="@+id/published"
         app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
-    <!-- tools:text="@sample/posts.json/data/author" -->
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:text="@sample/posts.json/data/author" />
+    <!--android:text="@string/author"-->
+
 
     <TextView
         android:id="@+id/published"
@@ -29,12 +30,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing_medium"
         android:layout_marginEnd="@dimen/common_spacing_medium"
-        android:text="@string/published"
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@id/author" />
-    <!-- tools:text="@sample/posts.json/data/published" -->
+        app:layout_constraintTop_toBottomOf="@id/author"
+        tools:text="@sample/posts.json/data/published" />
+    <!--android:text="@string/published"-->
 
     <ImageView
         android:id="@+id/avatar"
@@ -44,8 +45,8 @@
         android:contentDescription="@string/description_post_author_avatar"
         android:src="@drawable/netology"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!--tools:srcCompat="@sample/posts_avatars" /> -->
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@sample/posts_avatars" />
 
     <ImageButton
         android:id="@+id/menu"
@@ -69,6 +70,18 @@
         app:constraint_referenced_ids="avatar, published" />
 
     <TextView
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing_large"
+        android:autoLink="web"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier"
+        tools:text="@sample/posts.json/data/content" />
+
+    <!--
+        <TextView
         android:id="@+id/main_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -81,6 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/upper_menu_barrier" />
+        -->
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/downer_menu_barrier"
@@ -88,7 +102,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing_large"
-        app:constraint_referenced_ids="main_text" />
+        app:constraint_referenced_ids="content" />
 
     <ImageButton
         android:id="@+id/likes"
@@ -109,11 +123,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing_medium"
-        android:text="10"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/likes"
         app:layout_constraintStart_toEndOf="@+id/likes"
-        app:layout_constraintTop_toTopOf="@+id/likes" />
+        app:layout_constraintTop_toTopOf="@+id/likes"
+        tools:text="@sample/posts.json/data/sumLikes" />
 
     <ImageButton
         android:id="@+id/shares"
@@ -133,11 +146,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing_medium"
-        android:text="5"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/shares"
         app:layout_constraintStart_toEndOf="@+id/shares"
-        app:layout_constraintTop_toTopOf="@+id/shares" />
+        app:layout_constraintTop_toTopOf="@+id/shares"
+        tools:text="@sample/posts.json/data/sumShares" />
 
     <ImageButton
         android:id="@+id/views"
@@ -156,11 +168,9 @@
         android:id="@+id/views_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/views"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/views" />
-
+        app:layout_constraintTop_toTopOf="@+id/views"
+        tools:text="@sample/posts.json/data/sumViews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
