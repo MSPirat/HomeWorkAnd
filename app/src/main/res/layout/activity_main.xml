@@ -123,10 +123,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing_medium"
+        android:text="10"
+        android:textSize="@dimen/button_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/likes"
         app:layout_constraintStart_toEndOf="@+id/likes"
-        app:layout_constraintTop_toTopOf="@+id/likes"
-        tools:text="@sample/posts.json/data/sumLikes" />
+        app:layout_constraintTop_toTopOf="@+id/likes" />
 
     <ImageButton
         android:id="@+id/shares"
@@ -146,10 +147,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common_spacing_medium"
+        android:text="5"
+        android:textSize="@dimen/button_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/shares"
         app:layout_constraintStart_toEndOf="@+id/shares"
-        app:layout_constraintTop_toTopOf="@+id/shares"
-        tools:text="@sample/posts.json/data/sumShares" />
+        app:layout_constraintTop_toTopOf="@+id/shares" />
 
     <ImageButton
         android:id="@+id/views"
@@ -168,9 +170,10 @@
         android:id="@+id/views_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="5"
+        android:textSize="@dimen/button_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/views"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/views"
-        tools:text="@sample/posts.json/data/sumViews" />
+        app:layout_constraintTop_toTopOf="@+id/views" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
