@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     post.likeNum--
                 }
-                likeNum.text = post.likeNum.toString()
+                likeNum.text = CountLikeShare.counter(post.likeNum)
+//                likeNum.text = post.likeNum.toString()
             }
             share.setOnClickListener {
                 post.shareNum++
