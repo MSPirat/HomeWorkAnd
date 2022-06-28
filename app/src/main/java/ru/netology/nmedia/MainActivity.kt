@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
             }
             share.setOnClickListener {
                 post.shareNum++
-                shareNum.text = post.shareNum.toString()
+                shareNum.text = CountLikeShare.counter(post.shareNum)
+//                shareNum.text = post.shareNum.toString()
                 println("changed")
             }
         }
