@@ -68,3 +68,15 @@
 *   Название приложения (пусть на русском будет **"НМедиа"**)
 *   Текст (пусть на русском будет ***"НМедиа!"***)
 </details>
+
+### Домашнее задание к занятию «1.3. Constraint Layout»
+
+<details close><summary> Задача Layout</summary>
+    <br>
+Вёрстка для получения приложения следующего вида :arrow_heading_down:
+
+![](https://github.com/netology-code/and2-homeworks/blob/master/03_constraint_layout/pic/layout.png?raw=true)
+
+Реализована разметка в соответствии с заданием (при увеличении чисел изменяется величина строки). Все иконки взяты из стандартного набора.
+
+</details>
