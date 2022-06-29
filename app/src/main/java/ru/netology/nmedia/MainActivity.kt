@@ -39,12 +39,12 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     post.likeNum--
                 }
-                likeNum.text = CountLikeShare.counter(post.likeNum)
+                likeNum.text = CountLikeShare.counterDecimal(post.likeNum)
 //                likeNum.text = post.likeNum.toString()
             }
             share.setOnClickListener {
                 post.shareNum++
-                shareNum.text = CountLikeShare.counter(post.shareNum)
+                shareNum.text = CountLikeShare.counterDecimal(post.shareNum)
 //                shareNum.text = post.shareNum.toString()
                 println("changed")
             }
