@@ -8,6 +8,6 @@ data class Post(
     val content: String,
     var liked: Boolean = false,
 
-    var likeNum: Float = 999f,
-    var shareNum: Float = 1989f
+    var likeNum: Long = 999,
+    var shareNum: Long = 1299995
 )
