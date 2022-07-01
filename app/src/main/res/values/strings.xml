@@ -5,8 +5,9 @@
     <!--    <string name="author">Netology. University of Internet Professions</string>-->
     <!--    <string name="published">May 21 at 6:36 pm</string>-->
     <string name="description_more_vert" translatable="false" />
-    <string name="description_likes" translatable="false" />
-    <string name="description_shares" translatable="false" />
-    <string name="description_views" translatable="false" />
-    <string name="sum_likes" translatable="false" />
+    <string name="description_like" translatable="false" />
+    <string name="description_liked" translatable="false" />
+    <string name="description_share" translatable="false" />
+    <string name="description_view" translatable="false" />
+    <!-- <string name="sum_likes" translatable="false" />-->
 </resources>
