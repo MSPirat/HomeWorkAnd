@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
             author.text = post.author
             published.text = post.published
             content.text = post.content
+            likeNum.text = CountLikeShare.counterDecimal(post.likeNum)
+            shareNum.text = CountLikeShare.counterDecimal(post.shareNum)
             like.setOnClickListener {
                 post.liked = !post.liked
                 like.setImageResource(
