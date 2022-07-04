@@ -20,8 +20,6 @@
         app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar" />
-    <!--android:text="@string/author"-->
-
 
     <TextView
         android:id="@+id/published"
@@ -33,7 +31,6 @@
         app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toEndOf="@+id/avatar"
         app:layout_constraintTop_toBottomOf="@id/author" />
-    <!--android:text="@string/published"-->
 
     <ImageView
         android:id="@+id/avatar"
@@ -75,22 +72,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier" />
-
-    <!--
-        <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing_large"
-        android:layout_marginTop="@dimen/common_spacing_large"
-        android:layout_marginEnd="@dimen/common_spacing_large"
-        android:layout_marginBottom="@dimen/common_spacing_large"
-        android:text="@string/main_screen_message"
-        app:layout_constraintBottom_toTopOf="@id/downer_menu_barrier"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/upper_menu_barrier" />
-        -->
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/downer_menu_barrier"
