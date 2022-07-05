@@ -101,7 +101,6 @@
 
 </details>
 
-
 ### Домашнее задание к занятию «2.2. Архитектура: MVVM»
 
 <details close><summary> Задача MVVM </summary>
@@ -110,5 +109,16 @@
 Проект переделан согласно архитектуре **MVVM**.
 
 ~~That's all~~ :hammer_and_wrench: ~~, but it's not easy~~ :trollface:
+
+</details>
+
+### Домашнее задание к занятию «2.3. Отображение списков: RecyclerView»
+
+<details close><summary> Задача RecyclerView </summary>
+    <br>
+
+В проект добавлена реализацию отображения списков на базе RecyclerView и ListAdapter.
+
+По аналогии с лекцией к *OnLikeListener*, добавлен *OnShareListener*.
 
 </details>
