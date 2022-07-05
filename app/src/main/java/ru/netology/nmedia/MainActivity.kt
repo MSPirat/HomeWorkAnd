@@ -28,10 +28,7 @@ class MainActivity : AppCompatActivity() {
                         R.drawable.ic_baseline_like
                     }
                 )
-                likeNum.text = CountLikeShare.counterDecimal(post.likeNum)
-
                 like.setOnClickListener { viewModel.like() }
-
                 share.setOnClickListener { viewModel.share() }
             }
         }

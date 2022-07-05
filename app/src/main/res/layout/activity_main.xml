@@ -19,7 +19,8 @@
         app:layout_constraintBottom_toTopOf="@+id/published"
         app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintTop_toTopOf="@+id/avatar" />
+        app:layout_constraintTop_toTopOf="@+id/avatar"
+        tools:text="@sample/posts.json/data/author" />
 
     <TextView
         android:id="@+id/published"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/avatar"
         app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toEndOf="@+id/avatar"
-        app:layout_constraintTop_toBottomOf="@id/author" />
+        app:layout_constraintTop_toBottomOf="@id/author"
+        tools:text="@sample/posts.json/data/published" />
 
     <ImageView
         android:id="@+id/avatar"
@@ -71,7 +73,8 @@
         android:autoLink="web"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier" />
+        app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier"
+        tools:text="@sample/posts.json/data/content" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/downer_menu_barrier"
