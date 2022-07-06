@@ -9,5 +9,6 @@
     <string name="description_liked" translatable="false" />
     <string name="description_share" translatable="false" />
     <string name="description_view" translatable="false" />
+    <string name="post_menu_remove">Remove</string>
     <!-- <string name="sum_likes" translatable="false" />-->
 </resources>
