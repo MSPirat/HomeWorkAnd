@@ -1,6 +1,7 @@
 package ru.netology.nmedia.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,15 +16,19 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
 
+        binding.group.visibility = View.GONE
+
         val adapter = PostAdapter(
             object : PostEventListener {
                 override fun onEdit(post: Post) {
                     viewModel.editContent(post)
+                    binding.group.visibility = View.VISIBLE
                 }
 
                 override fun onRemove(post: Post) {
@@ -40,37 +45,48 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        viewModel.edited.observe(this) { edited ->
-            if (edited.id == 0L) {
-                return@observe
-            }
-
-            binding.content.setText(edited.content)
-            binding.content.requestFocus()
-        }
-
-        binding.save.setOnClickListener {
-            if (binding.content.text.isNullOrBlank()) {
-                Toast.makeText(it.context, getString(R.string.empty_post_error), Toast.LENGTH_SHORT)
-                    .show()
-
-                return@setOnClickListener
-            }
-
-            val text = binding.content.text.toString()
-
-            viewModel.changeContent(text)
-            viewModel.saveContent()
-
-            binding.content.clearFocus()
-            AndroidUtils.hideKeyboard(binding.content)
-            binding.content.setText("")
-        }
-
         binding.container.adapter = adapter
 
         viewModel.data.observe(this) { posts ->
-            adapter.submitList(posts)
+            val newPost = adapter.itemCount < posts.size
+            adapter.submitList(posts) {
+                if (newPost) binding.container.smoothScrollToPosition(0)
+            }
+        }
+
+        viewModel.edited.observe(this) {
+            with(binding.contentCheck) {
+                text = it.content
+            }
+            binding.content.setText(it.content)
+        }
+
+        binding.save.setOnClickListener {
+            with(binding.content) {
+                if (text.isNullOrBlank()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        context.getString(R.string.empty_post_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+                viewModel.changeContent(text.toString())
+                viewModel.saveContent()
+                setText("")
+                clearFocus()
+                AndroidUtils.hideKeyboard(this)
+                binding.group.visibility = View.GONE
+            }
+        }
+
+        binding.cancel.setOnClickListener {
+            with(binding.content) {
+                setText("")
+                clearFocus()
+                AndroidUtils.hideKeyboard(this)
+                binding.group.visibility = View.GONE
+            }
         }
     }
 }

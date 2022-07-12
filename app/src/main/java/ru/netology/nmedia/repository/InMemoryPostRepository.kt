@@ -128,16 +128,19 @@ class InMemoryPostRepository : PostRepository {
     }
 
     override fun save(post: Post) {
-        data.value = if (post.id == 0L) {
+        posts = if (post.id == 0L) {
             listOf(
                 post.copy(
-                    id = posts.firstOrNull()?.id ?: +1L
+                    id = post.id + 1L
                 )
             ) + posts
+            //            data.value = posts
+            //            return
         } else {
             posts.map {
-                if (it.id == post.id) it.copy(content = post.content) else it
+                if (it.id != post.id) it else it.copy(content = post.content)
             }
         }
+        data.value = posts
     }
 }

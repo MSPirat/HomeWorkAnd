@@ -20,6 +20,7 @@ val emptyPost = Post(
 class PostViewModel : ViewModel() {
     private val repository: PostRepository = InMemoryPostRepository()
     val data = repository.get()
+
     fun likeById(id: Long) = repository.likeById(id)
     fun shareById(id: Long) = repository.shareById(id)
     fun removeById(id: Long) = repository.removeById(id)

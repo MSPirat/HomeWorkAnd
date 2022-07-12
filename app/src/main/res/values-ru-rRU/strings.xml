@@ -6,5 +6,6 @@
     <string name="post_menu_edit">Редактировать</string>
     <string name="post_input_text_hint">Введите текст поста</string>
     <string name="empty_post_error">Пост пустой</string>
+    <string name="edit_message">Редактирование</string>
 
 </resources>

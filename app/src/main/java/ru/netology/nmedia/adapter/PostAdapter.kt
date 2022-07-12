@@ -18,10 +18,6 @@ interface PostEventListener {
     fun onShare(post: Post)
 }
 
-//typealias onLikeListener = (post: Post) -> Unit
-//typealias onShareListener = (post: Post) -> Unit
-//typealias onRemoveListener = (post: Post) -> Unit
-
 class PostAdapter(
     private val listener: PostEventListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
@@ -29,8 +25,8 @@ class PostAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(
-            binding = binding,
-            listener = listener,
+            binding,
+            listener,
         )
     }
 
@@ -42,8 +38,9 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val listener: PostEventListener
+    private val listener: PostEventListener,
 ) : RecyclerView.ViewHolder(binding.root) {
+
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
@@ -65,18 +62,21 @@ class PostViewHolder(
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.post_menu)
+
                     setOnMenuItemClickListener { menuItem ->
                         when (menuItem.itemId) {
                             R.id.remove -> {
                                 listener.onRemove(post)
+//                                true
                                 return@setOnMenuItemClickListener true
                             }
                             R.id.edit -> {
                                 listener.onEdit(post)
+//                                true
                                 return@setOnMenuItemClickListener true
                             }
+                            else -> false
                         }
-                        false
                     }
                 }.show()
             }
