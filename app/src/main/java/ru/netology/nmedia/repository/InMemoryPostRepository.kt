@@ -121,4 +121,26 @@ class InMemoryPostRepository : PostRepository {
         }
         data.value = posts
     }
+
+    override fun removeById(id: Long) {
+        posts = posts.filterNot { it.id == id }
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        posts = if (post.id == 0L) {
+            listOf(
+                post.copy(
+                    id = post.id + 1L
+                )
+            ) + posts
+            //            data.value = posts
+            //            return
+        } else {
+            posts.map {
+                if (it.id != post.id) it else it.copy(content = post.content)
+            }
+        }
+        data.value = posts
+    }
 }

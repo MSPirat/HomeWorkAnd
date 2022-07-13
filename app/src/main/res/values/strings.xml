@@ -9,5 +9,13 @@
     <string name="description_liked" translatable="false" />
     <string name="description_share" translatable="false" />
     <string name="description_view" translatable="false" />
-    <!-- <string name="sum_likes" translatable="false" />-->
+    <string name="description_save" translatable="false" />
+    <string name="description_edit" translatable="false" />
+    <string name="description_cancel" translatable="false" />
+    <string name="description_bottom_line_edit" translatable="false" />
+    <string name="post_menu_remove">Remove</string>
+    <string name="post_input_text_hint">Edit Post text</string>
+    <string name="empty_post_error">Post is blank</string>
+    <string name="post_menu_edit">Edit</string>
+    <string name="edit_message">Edit Message</string>
 </resources>
