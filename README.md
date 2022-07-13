@@ -122,3 +122,24 @@
 По аналогии с лекцией к *OnLikeListener*, добавлен *OnShareListener*.
 
 </details>
+
+### Домашнее задание к занятию «2.4. CRUD: списки, добавление, удаление, изменение»
+
+<details close><summary> Задача Задача CRUD и отмена редактирования </summary>
+    <br>
+
+- В проект приложения добавлена реализация **CRUD**.
+
+- Реализована отмена редактирования (по аналогии с *Telegram*)
+
+![](https://github.com/netology-code/and2-homeworks/blob/master/07_crud/pic/cancel.png?raw=true)
+
+Для этого с помощью ConstraintLayout сформирована соответствующую структура над полем ввода поста.
+View объединены в [виртуальную группу](https://developer.android.com/reference/androidx/constraintlayout/widget/Group).
+
+Во ViewModel выставляются нужные значения для сокрытия и отображения панели:
+
+    group.visibility = View.GONE        // сокрытие
+    group.visibility = View.VISIBLE     // отображение
+
+</details>
