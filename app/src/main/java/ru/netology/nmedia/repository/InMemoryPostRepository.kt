@@ -143,8 +143,6 @@ class InMemoryPostRepository : PostRepository {
                     id = post.id + 1L
                 )
             ) + posts
-            //            data.value = posts
-            //            return
         } else {
             posts.map {
                 if (it.id != post.id) it else it.copy(content = post.content)

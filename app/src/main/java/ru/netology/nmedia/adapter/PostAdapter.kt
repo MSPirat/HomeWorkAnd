@@ -47,20 +47,11 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
             like.text = CountLikeShareView.counterDecimal(post.likeNum)
-//            likeNum.text = CountLikeShareView.counterDecimal(post.likeNum)
             share.text = CountLikeShareView.counterDecimal(post.shareNum)
-//            shareNum.text = CountLikeShareView.counterDecimal(post.shareNum)
             view.text = CountLikeShareView.counterDecimal(post.viewNum)
-//            viewNum.text = CountLikeShareView.counterDecimal(post.viewNum)
 
             like.isChecked = post.liked
-//            like.setImageResource(
-//                if (post.liked) {
-//                    R.drawable.ic_baseline_liked
-//                } else {
-//                    R.drawable.ic_baseline_like
-//                }
-//            )
+
             like.setOnClickListener { listener.onLike(post) }
             share.setOnClickListener { listener.onShare(post) }
 
