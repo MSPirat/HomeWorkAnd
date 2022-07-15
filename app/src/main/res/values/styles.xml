@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Widget.AppTheme.LikeCheckBox" parent="Widget.MaterialComponents.Button.TextButton.Icon">
+    <style name="Widget.AppTheme.LikeCheckBox" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="iconTint">@color/like_checkbox_tint</item>
         <item name="icon">@drawable/ic_like</item>
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:textColor">?attr/colorControlNormal</item>
-        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="backgroundTint">@color/light_silver</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:minWidth">@dimen/button_size</item>
+        <item name="android:minHeight">@dimen/button_size</item>
+    </style>
+
+    <style name="Widget.AppTheme.ShareCheckBox" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconTint">?attr/colorControlNormal</item>
+        <item name="icon">@drawable/ic_baseline_share</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="backgroundTint">@color/light_silver</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:minWidth">@dimen/button_size</item>
+        <item name="android:minHeight">@dimen/button_size</item>
+    </style>
+
+    <style name="Widget.AppTheme.ViewCheckBox" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconTint">?attr/colorControlNormal</item>
+        <item name="icon">@drawable/ic_baseline_remove_red_eye</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">?attr/colorControlNormal</item>
+        <item name="backgroundTint">@color/light_silver</item>
+        <item name="cornerRadius">16dp</item>
         <item name="rippleColor">@android:color/transparent</item>
         <item name="android:minWidth">@dimen/button_size</item>
         <item name="android:minHeight">@dimen/button_size</item>

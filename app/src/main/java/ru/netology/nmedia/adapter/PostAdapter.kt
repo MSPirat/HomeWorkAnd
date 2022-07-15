@@ -48,8 +48,10 @@ class PostViewHolder(
             content.text = post.content
             like.text = CountLikeShareView.counterDecimal(post.likeNum)
 //            likeNum.text = CountLikeShareView.counterDecimal(post.likeNum)
-            shareNum.text = CountLikeShareView.counterDecimal(post.shareNum)
-            viewNum.text = CountLikeShareView.counterDecimal(post.viewNum)
+            share.text = CountLikeShareView.counterDecimal(post.shareNum)
+//            shareNum.text = CountLikeShareView.counterDecimal(post.shareNum)
+            view.text = CountLikeShareView.counterDecimal(post.viewNum)
+//            viewNum.text = CountLikeShareView.counterDecimal(post.viewNum)
 
             like.isChecked = post.liked
 //            like.setImageResource(
