@@ -44,17 +44,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
+        style="@style/Widget.App.MenuCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_more_vert"
+        android:checkable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/menu"-->
+    <!--        android:layout_width="@dimen/button_size"-->
+    <!--        android:layout_height="@dimen/button_size"-->
+    <!--        android:layout_centerInParent="true"-->
+    <!--        android:background="@android:color/transparent"-->
+    <!--        android:contentDescription="@string/description_more_vert"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_baseline_more"-->
+    <!--        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />-->
     <!-- tools:ignore Small size & Speakable Button (при ненадобности удалить) -->
 
     <androidx.constraintlayout.widget.Barrier
@@ -69,7 +79,7 @@
         android:id="@+id/content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing_large"
+        android:layout_marginTop="@dimen/common_spacing_medium"
         android:autoLink="web"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,9 +91,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:barrierMargin="@dimen/common_spacing_large"
+        app:barrierMargin="@dimen/common_spacing_medium"
         app:constraint_referenced_ids="content" />
-
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
@@ -91,10 +100,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checkable="true"
+        android:layout_marginTop="@dimen/common_spacing_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"
         tools:text="@sample/posts.json/data/likeNum" />
-
 
     <!--    android:button="@drawable/ic_like"-->
     <!--    <ImageButton-->
