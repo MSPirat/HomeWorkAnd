@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.CountLikeShare
+import ru.netology.nmedia.util.CountLikeShareView
 
 interface PostEventListener {
     fun onEdit(post: Post)
@@ -46,16 +46,19 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            likeNum.text = CountLikeShare.counterDecimal(post.likeNum)
-            shareNum.text = CountLikeShare.counterDecimal(post.shareNum)
+            like.text = CountLikeShareView.counterDecimal(post.likeNum)
+//            likeNum.text = CountLikeShareView.counterDecimal(post.likeNum)
+            shareNum.text = CountLikeShareView.counterDecimal(post.shareNum)
+            viewNum.text = CountLikeShareView.counterDecimal(post.viewNum)
 
-            like.setImageResource(
-                if (post.liked) {
-                    R.drawable.ic_baseline_liked
-                } else {
-                    R.drawable.ic_baseline_like
-                }
-            )
+            like.isChecked = post.liked
+//            like.setImageResource(
+//                if (post.liked) {
+//                    R.drawable.ic_baseline_liked
+//                } else {
+//                    R.drawable.ic_baseline_like
+//                }
+//            )
             like.setOnClickListener { listener.onLike(post) }
             share.setOnClickListener { listener.onShare(post) }
 

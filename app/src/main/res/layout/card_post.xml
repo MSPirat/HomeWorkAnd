@@ -84,30 +84,43 @@
         app:barrierMargin="@dimen/common_spacing_large"
         app:constraint_referenced_ids="content" />
 
-    <ImageButton
-        android:id="@+id/like"
-        android:layout_width="@dimen/button_size"
-        android:layout_height="@dimen/button_size"
-        android:layout_marginTop="@dimen/common_spacing_large"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/description_like"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"
-        app:srcCompat="@drawable/ic_baseline_like"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-    <!-- tools:ignore Small size & Speakable Button (при ненадобности удалить
-        в likes, shares, views) -->
 
-    <TextView
-        android:id="@+id/like_num"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/like"
+        style="@style/Widget.AppTheme.LikeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing_medium"
-        android:text="0"
-        android:textSize="@dimen/button_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/like"
-        app:layout_constraintStart_toEndOf="@+id/like"
-        app:layout_constraintTop_toTopOf="@+id/like" />
+        android:checkable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"
+        tools:text="@sample/posts.json/data/likeNum" />
+
+
+    <!--    android:button="@drawable/ic_like"-->
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/like"-->
+    <!--        android:layout_width="@dimen/button_size"-->
+    <!--        android:layout_height="@dimen/button_size"-->
+    <!--        android:layout_marginTop="@dimen/common_spacing_large"-->
+    <!--        android:background="@android:color/transparent"-->
+    <!--        android:contentDescription="@string/description_like"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"-->
+    <!--        app:srcCompat="@drawable/ic_baseline_like"-->
+    <!--        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />-->
+    <!--    &lt;!&ndash; tools:ignore Small size & Speakable Button (при ненадобности удалить-->
+    <!--        в likes, shares, views) &ndash;&gt;-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/like_num"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/common_spacing_medium"-->
+    <!--        android:text="0"-->
+    <!--        android:textSize="@dimen/button_text_size"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/like"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/like"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/like" />-->
 
     <ImageButton
         android:id="@+id/share"
@@ -117,7 +130,7 @@
         android:layout_marginTop="@dimen/common_spacing_large"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_share"
-        app:layout_constraintStart_toEndOf="@+id/like_num"
+        app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toTopOf="@+id/downer_menu_barrier"
         app:srcCompat="@drawable/ic_baseline_share"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
