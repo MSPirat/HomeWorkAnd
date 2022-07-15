@@ -143,3 +143,18 @@ View объединены в [виртуальную группу](https://devel
     group.visibility = View.VISIBLE     // отображение
 
 </details>
+
+</details>
+
+### Домашнее задание к занятию «3.1. Material Design»
+
+<details close><summary> Задача Кнопки </summary>
+    <br>
+
+Стилизованы кнопки **Like**, **Share**, **Menu**, а также **View** в виде *Button*, согласно документации на компоненты  :open_book:  [Buttons](https://material.io/develop/android/components/buttons).
+
+Текст задан через атрибуты кнопки (кол-во лайков, шаринга, просмотров).
+
+Создан и назначен кнопкам отдельный стиль ***styles.xml***.
+
+</details>
