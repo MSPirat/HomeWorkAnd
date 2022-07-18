@@ -15,6 +15,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 1,
             shareNum = 1,
+            viewNum = 1,
             authorAvatar = ""
         ),
         Post(
@@ -25,6 +26,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 1,
             shareNum = 1,
+            viewNum = 1,
             authorAvatar = ""
         ),
         Post(
@@ -35,6 +37,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 1,
             shareNum = 1,
+            viewNum = 1,
             authorAvatar = ""
         ),
         Post(
@@ -45,6 +48,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 1000000,
             shareNum = 555,
+            viewNum = 9999,
             authorAvatar = ""
         ),
         Post(
@@ -55,6 +59,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 1,
             shareNum = 8997,
+            viewNum = 153899,
             authorAvatar = ""
         ),
         Post(
@@ -65,6 +70,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 697,
             shareNum = 39,
+            viewNum = 734564,
             authorAvatar = ""
         ),
         Post(
@@ -75,6 +81,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 13998999,
             shareNum = 1,
+            viewNum = 10,
             authorAvatar = ""
         ),
         Post(
@@ -85,6 +92,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 9999,
             shareNum = 13899,
+            viewNum = 1000000,
             authorAvatar = ""
         ),
         Post(
@@ -95,6 +103,7 @@ class InMemoryPostRepository : PostRepository {
             liked = false,
             likeNum = 12489,
             shareNum = 5995,
+            viewNum = 9,
             authorAvatar = ""
         ),
     )
@@ -134,8 +143,6 @@ class InMemoryPostRepository : PostRepository {
                     id = post.id + 1L
                 )
             ) + posts
-            //            data.value = posts
-            //            return
         } else {
             posts.map {
                 if (it.id != post.id) it else it.copy(content = post.content)

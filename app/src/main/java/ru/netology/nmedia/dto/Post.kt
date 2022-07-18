@@ -9,5 +9,6 @@ data class Post(
     val liked: Boolean,
 
     val likeNum: Long,
-    val shareNum: Long
+    val shareNum: Long,
+    val viewNum: Long
 )

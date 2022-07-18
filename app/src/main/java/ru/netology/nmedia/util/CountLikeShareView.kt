@@ -3,7 +3,7 @@ package ru.netology.nmedia.util
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
-object CountLikeShare {
+object CountLikeShareView {
 
     private const val ZERO = 0
     private const val THOUSAND = 1_000
