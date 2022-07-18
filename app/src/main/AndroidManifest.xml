@@ -14,14 +14,36 @@
         android:theme="@style/Theme.HomeWorkAnd"
         tools:targetApi="31">
         <activity
-            android:name=".activity.MainActivity"
-            android:exported="true">
+            android:name=".activity.IntentHandlerActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_baseline_check">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <data android:mimeType="text/plain" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="true">
+
+        </activity>
+        <!--        <activity-->
+        <!--            android:name=".activity.MainActivity"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
+
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
     </application>
 
 </manifest>

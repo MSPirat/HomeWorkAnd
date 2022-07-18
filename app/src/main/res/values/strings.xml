@@ -19,4 +19,5 @@
     <string name="empty_post_error">Post is blank</string>
     <string name="post_menu_edit">Edit</string>
     <string name="edit_message">Edit Message</string>
+    <string name="empty_content_error">Content is empty</string>
 </resources>
