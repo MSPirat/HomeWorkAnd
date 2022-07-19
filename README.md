@@ -158,3 +158,18 @@ View объединены в [виртуальную группу](https://devel
 Создан и назначен кнопкам отдельный стиль ***styles.xml***.
 
 </details>
+
+### Домашнее задание к занятию «3.2 Организация навигации (перемещение между Activity)»
+
+<details close><summary> Задача Editing </summary>
+    <br>
+
+Реализованы создание поста и функция редактирования поста в отдельных *Activity*.
+
+</details>
+<details close><summary> Задача YouTube Video </summary>
+    <br>
+
+На **Intent'ах** в Android строится большая часть взаимодействия между приложениями, в частности, задействуются другие приложения для отображения нужного контента/выполнения действий и т.д. (Самые распространённые [Intent'ы](https://developer.android.com/guide/components/intents-common))
+
+</details>
