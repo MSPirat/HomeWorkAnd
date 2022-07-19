@@ -16,7 +16,7 @@
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:padding="@dimen/common_spacing_medium"
-        tools:ignore="MissingConstraints"/>
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save"
@@ -24,9 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/common_spacing_large"
-        android:contentDescription="TODO"
-        app:srcCompat="@drawable/ic_baseline_done">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        android:contentDescription="@string/description_save_post"
+        app:srcCompat="@drawable/ic_baseline_done" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

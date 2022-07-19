@@ -8,10 +8,11 @@ import ru.netology.nmedia.repository.PostRepository
 
 val emptyPost = Post(
     0,
+    "Somebody",
     "",
+    "Once upon a time",
     "",
-    "",
-    "",
+    null,
     false,
     0,
     0,
@@ -26,7 +27,7 @@ class PostViewModel : ViewModel() {
     fun shareById(id: Long) = repository.shareById(id)
     fun removeById(id: Long) = repository.removeById(id)
 
-    val edited = MutableLiveData(emptyPost)
+    private val edited = MutableLiveData(emptyPost)
 
     fun saveContent() {
         edited.value?.let {

@@ -1,5 +1,7 @@
 package ru.netology.nmedia.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.result.launch
 import androidx.activity.viewModels
@@ -26,10 +28,6 @@ class MainActivity : AppCompatActivity() {
                 viewModel.saveContent()
             }
         }
-
-//        val viewModel: PostViewModel by viewModels()
-
-//        binding.group.visibility = View.GONE
 
         val editPostActivityContract =
             registerForActivityResult(EditPostActivityContract()) { text ->
@@ -59,6 +57,11 @@ class MainActivity : AppCompatActivity() {
                 override fun onShare(post: Post) {
                     viewModel.shareById(post.id)
                 }
+
+                override fun onVideo(post: Post) {
+                    val intentVideo = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                    startActivity(intentVideo)
+                }
             }
         )
 
@@ -75,40 +78,5 @@ class MainActivity : AppCompatActivity() {
         binding.addPost.setOnClickListener {
             newPostContract.launch()
         }
-
-
-//        viewModel.edited.observe(this) {
-//            with(binding.contentCheck) {
-//                text = it.content
-//            }
-//            binding.content.setText(it.content)
-//        }
-
-//        binding.save.setOnClickListener {
-//            with(binding.content) {
-////                if (text.isNullOrBlank()) {
-////                    Toast.makeText(
-////                        this@MainActivity,
-////                        context.getString(R.string.empty_post_error),
-////                        Toast.LENGTH_SHORT
-////                    ).show()
-////                    return@setOnClickListener
-////                }
-//                viewModel.changeContent(text.toString())
-//                viewModel.saveContent()
-//                setText("")
-//                clearFocus()
-//                AndroidUtils.hideKeyboard(this)
-//                binding.group.visibility = View.GONE
-//            }
-//        }
-
-//        binding.cancel.setOnClickListener {
-//            with(binding.content) {
-//                setText("")
-//                clearFocus()
-//                AndroidUtils.hideKeyboard(this)
-//                binding.group.visibility = View.GONE
-//        }
     }
 }
