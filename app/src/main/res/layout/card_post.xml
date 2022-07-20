@@ -68,10 +68,41 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing_medium"
         android:autoLink="web"
+        app:constraint_referenced_ids="background_video"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier"
         tools:text="@sample/posts.json/data/content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/play_video_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="background_video, play" />
+
+    <ImageButton
+        android:id="@+id/background_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing_medium"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/description_background_video"
+        android:src="@drawable/background_video"
+        app:layout_constraintEnd_toEndOf="@id/play_video_group"
+        app:layout_constraintStart_toStartOf="@id/play_video_group"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <ImageButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/description_play"
+        android:src="@drawable/ic_baseline_play_circle_outline"
+        app:layout_constraintBottom_toBottomOf="@id/background_video"
+        app:layout_constraintEnd_toEndOf="@id/background_video"
+        app:layout_constraintStart_toStartOf="@id/background_video"
+        app:layout_constraintTop_toTopOf="@id/background_video" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/downer_menu_barrier"
@@ -79,7 +110,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing_medium"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="content, background_video" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
