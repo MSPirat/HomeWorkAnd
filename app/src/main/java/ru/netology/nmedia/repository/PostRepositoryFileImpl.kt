@@ -1,11 +1,15 @@
 package ru.netology.nmedia.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import ru.netology.nmedia.dto.Post
 
-class InMemoryPostRepository : PostRepository {
+class PostRepositoryFileImpl(private val context: Context) : PostRepository {
 
+    /*
     private var posts = listOf(
         Post(
             id = 9,
@@ -117,7 +121,33 @@ class InMemoryPostRepository : PostRepository {
         ),
     )
 
+*/
+
+    private val gson = Gson()
+    private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
+    private val filename = "posts.json"
+
+    //    private var nextId = 1L
+    private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
+
+    init {
+        val file = context.filesDir.resolve(filename)
+        if (file.exists()) {
+            context.openFileInput(filename).bufferedReader().use {
+                posts = gson.fromJson(it, type)
+                data.value = posts
+            }
+        } else {
+            sync()
+        }
+    }
+
+    private fun sync() {
+        context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
+            it.write(gson.toJson(posts))
+        }
+    }
 
     override fun get(): LiveData<List<Post>> = data
 
@@ -129,6 +159,7 @@ class InMemoryPostRepository : PostRepository {
             )
         }
         data.value = posts
+        sync()
     }
 
     override fun shareById(id: Long) {
@@ -138,11 +169,13 @@ class InMemoryPostRepository : PostRepository {
             )
         }
         data.value = posts
+        sync()
     }
 
     override fun removeById(id: Long) {
         posts = posts.filterNot { it.id == id }
         data.value = posts
+        sync()
     }
 
     override fun save(post: Post) {
@@ -158,5 +191,6 @@ class InMemoryPostRepository : PostRepository {
             }
         }
         data.value = posts
+        sync()
     }
 }
