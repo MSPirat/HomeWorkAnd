@@ -36,38 +36,11 @@ class FeedFragment : Fragment() {
             false
         )
 
-//        return super.onCreateView(inflater, container, savedInstanceState)
-//    }
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.fragment_feed)
-//        val binding = ActivityMainBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
-//        val viewModel: PostViewModel by viewModels()
-
-//        val newPostContract = registerForActivityResult(NewPostActivityContract()) { text ->
-//            text?.let {
-//                viewModel.changeContent(it)
-//                viewModel.saveContent()
-//            }
-//        }
-//
-//        val editPostActivityContract =
-//            registerForActivityResult(EditPostActivityContract()) { text ->
-//                text?.let {
-//                    viewModel.changeContent(it)
-//                    viewModel.saveContent()
-//                }
-//            }
-
         val adapter = PostAdapter(
             object : PostEventListener {
 
                 override fun onEdit(post: Post) {
                     viewModel.editContent(post)
-//                    binding.group.visibility = View.VISIBLE
-//                    editPostActivityContract.launch(post.content)
                     findNavController().navigate(
                         R.id.action_feedFragment_to_newPostFragment,
                         Bundle().apply {
@@ -116,7 +89,6 @@ class FeedFragment : Fragment() {
 
         binding.addPost.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
-//            newPostContract.launch()
         }
         return binding.root
     }

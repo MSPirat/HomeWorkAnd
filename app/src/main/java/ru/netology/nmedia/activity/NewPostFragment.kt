@@ -24,11 +24,6 @@ class NewPostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        return super.onCreateView(inflater, container, savedInstanceState)
-//    }
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
         val binding = FragmentNewPostBinding.inflate(
             inflater,
             container,
@@ -46,27 +41,6 @@ class NewPostFragment : Fragment() {
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigateUp()
         }
-//        setContentView(binding.root)
-//        binding.content.requestFocus()
-//
-//        val contents = intent.getStringExtra(Intent.EXTRA_TEXT)
-//
-//        binding.content.setText(contents)
-//
-//        binding.save.setOnClickListener {
-//            if (binding.content.text.isNullOrBlank()) {
-//                Toast.makeText(
-//                    this,
-//                    getString(R.string.empty_post_error),
-//                    Toast.LENGTH_SHORT
-//                ).show()
-//                setResult(RESULT_CANCELED)
-//            } else {
-//                val result = Intent().putExtra(Intent.EXTRA_TEXT, binding.content.text.toString())
-//                setResult(RESULT_OK, result)
-//            }
-//            finish()
-//        }
         return binding.root
     }
 
@@ -74,13 +48,13 @@ class NewPostFragment : Fragment() {
         var Bundle.textArg: String? by StringArg
     }
 
-    object StringArg: ReadWriteProperty<Bundle, String?> {
+    object StringArg : ReadWriteProperty<Bundle, String?> {
         override fun getValue(thisRef: Bundle, property: KProperty<*>): String? {
             return thisRef.getString(property.name)
         }
 
         override fun setValue(thisRef: Bundle, property: KProperty<*>, value: String?) {
-            thisRef.putString(property.name,value)
+            thisRef.putString(property.name, value)
         }
     }
 }
