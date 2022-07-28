@@ -68,9 +68,10 @@ class PostFragment : Fragment() {
                                     when (menuItem.itemId) {
                                         R.id.remove -> {
                                             viewModel.removeById(post.id)
-                                            findNavController().navigate(
-                                                R.id.action_postFragment_to_feedFragment
-                                            )
+//                                            findNavController().navigate(
+//                                                R.id.action_postFragment_to_feedFragment
+//                                            )
+                                            findNavController().navigateUp()
                                             true
                                         }
                                         R.id.edit -> {
