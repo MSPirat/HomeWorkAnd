@@ -18,6 +18,7 @@ interface PostEventListener {
     fun onLike(post: Post)
     fun onShare(post: Post)
     fun onVideo(post: Post)
+    fun onPost(post: Post)
 }
 
 class PostAdapter(
@@ -64,6 +65,8 @@ class PostViewHolder(
             share.setOnClickListener { listener.onShare(post) }
             play.setOnClickListener { listener.onVideo(post) }
             backgroundVideo.setOnClickListener { listener.onVideo(post) }
+
+            thisPost.setOnClickListener { listener.onPost(post) }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
