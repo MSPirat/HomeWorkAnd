@@ -21,8 +21,6 @@ private val emptyPost = Post(
     0
 )
 
-//class PostViewModel : ViewModel() {
-//    private val repository: PostRepository = PostRepositoryFileImpl()
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository =
