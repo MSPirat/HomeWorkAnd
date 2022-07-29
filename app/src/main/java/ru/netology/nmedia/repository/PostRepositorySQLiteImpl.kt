@@ -3,11 +3,10 @@ package ru.netology.nmedia.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dto.Post
 
-class PostRepositoryFileImpl(private val context: Context) : PostRepository {
+class PostRepositorySQLiteImpl(private val dao: PostDao) : PostRepository {
 
     /*
     private var posts = listOf(
@@ -123,31 +122,36 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
 
 */
 
-    private val gson = Gson()
-    private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
-    private val filename = "posts.json"
+//    private val gson = Gson()
+//    private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
+//    private val filename = "posts.json"
 
-    //    private var nextId = 1L
+//    private var nextId = 1L
     private var posts = emptyList<Post>()
     private val data = MutableLiveData(posts)
 
+//    init {
+//        val file = context.filesDir.resolve(filename)
+//        if (file.exists()) {
+//            context.openFileInput(filename).bufferedReader().use {
+//                posts = gson.fromJson(it, type)
+//                data.value = posts
+//            }
+//        } else {
+//            sync()
+//        }
+//    }
+
     init {
-        val file = context.filesDir.resolve(filename)
-        if (file.exists()) {
-            context.openFileInput(filename).bufferedReader().use {
-                posts = gson.fromJson(it, type)
-                data.value = posts
-            }
-        } else {
-            sync()
-        }
+        posts = dao.get()
+        data.value = posts
     }
 
-    private fun sync() {
-        context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
-            it.write(gson.toJson(posts))
-        }
-    }
+//    private fun sync() {
+//        context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
+//            it.write(gson.toJson(posts))
+//        }
+//    }
 
     override fun get(): LiveData<List<Post>> = data
 
@@ -159,7 +163,7 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
             )
         }
         data.value = posts
-        sync()
+//        sync()
     }
 
     override fun shareById(id: Long) {
@@ -169,28 +173,37 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
             )
         }
         data.value = posts
-        sync()
+//        sync()
     }
 
     override fun removeById(id: Long) {
         posts = posts.filterNot { it.id == id }
         data.value = posts
-        sync()
+//        sync()
     }
 
     override fun save(post: Post) {
-        posts = if (post.id == 0L) {
-            listOf(
-                post.copy(
-                    id = post.id + 1L
-                )
-            ) + posts
+//        posts = if (post.id == 0L) {
+//            listOf(
+//                post.copy(
+//                    id = post.id + 1L
+//                )
+//            ) + posts
+//        } else {
+//            posts.map {
+//                if (it.id != post.id) it else it.copy(content = post.content)
+//            }
+//        }
+        val id = post.id
+        val saved = dao.save(post)
+        posts = if (id == 0L) {
+            listOf(saved) + posts
         } else {
             posts.map {
-                if (it.id != post.id) it else it.copy(content = post.content)
+                if (it.id != id) it else saved
             }
         }
         data.value = posts
-        sync()
+//        sync()
     }
 }
