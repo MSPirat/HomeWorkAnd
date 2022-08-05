@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/HomeWorkAnd/app/src/main/res/layout/fragment_post.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/HomeWorkAnd/app/src/main/res/menu/post_menu.xml" value="0.278125" />
         <entry key="..\:/Users/admin/.gradle/caches/transforms-3/8a39463ca7a3527efd979299126c223b/transformed/appcompat-1.4.2/res/drawable/abc_btn_borderless_material.xml" value="0.282" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/HomeWorkAnd/app/src/main/res/drawable/back.xml" value="0.16" />
         <entry key="..\:/Users/admin/AndroidStudioProjects/HomeWorkAnd/app/src/main/res/drawable/background_video.xml" value="0.2055" />
