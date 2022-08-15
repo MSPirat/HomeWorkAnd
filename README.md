@@ -239,6 +239,15 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 <details close><summary> Задача SQL </summary>
     <br>
 
-Произведена миграция проекта на SQLite, с сохранением работоспособности приложения.
+Произведена миграция проекта на ***SQLite***, с сохранением работоспособности приложения.
+
+</details>
+
+### Домашнее задание к занятию «4.2 Библиотека Room»
+
+<details close><summary> Задача Room </summary>
+    <br>
+
+Произведена миграция проекта на библиотеку ***ROOM***, с сохранением работоспособности приложения.
 
 </details>
