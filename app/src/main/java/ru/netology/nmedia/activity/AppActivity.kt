@@ -16,6 +16,10 @@ class AppActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            println("current token: $it")
+        }
+
         val binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -38,9 +42,6 @@ class AppActivity : AppCompatActivity() {
                     textArg = text
                 }
             )
-        }
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            println("current token: $it")
         }
     }
 }
