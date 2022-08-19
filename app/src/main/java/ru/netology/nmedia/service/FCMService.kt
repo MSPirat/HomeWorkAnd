@@ -10,6 +10,10 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.nmedia.R
+import ru.netology.nmedia.service.notifications.Action
+import ru.netology.nmedia.service.notifications.Like
+import ru.netology.nmedia.service.notifications.NewPost
+import ru.netology.nmedia.service.notifications.Notification
 import kotlin.random.Random
 
 
@@ -35,15 +39,51 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
 
-        message.data[action]?.let {
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+        try {
+            message.data[action]?.let {
+                when (Action.valueOf(it)) {
+                    Action.LIKE -> handleLike(
+                        gson.fromJson(
+                            message.data[content],
+                            Like::class.java
+                        )
+                    )
+                    Action.POST -> handleNewPost(
+                        gson.fromJson(
+                            message.data[content],
+                            NewPost::class.java
+                        )
+                    )
+                }
             }
+        } catch (error: IllegalArgumentException) {
+            errorNotification(gson.fromJson(message.data[content], Notification::class.java))
         }
     }
 
     override fun onNewToken(token: String) {
         println(token)
+    }
+
+    private fun errorNotification(content: Notification) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setShowWhen(false)
+            .setContentTitle(
+                getString(
+                    R.string.error_notification_title
+                )
+            )
+            .setContentText(
+                getString(
+                    R.string.error_notification_text
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
     }
 
     private fun handleLike(content: Like) {
@@ -62,15 +102,21 @@ class FCMService : FirebaseMessagingService() {
         NotificationManagerCompat.from(this)
             .notify(Random.nextInt(100_000), notification)
     }
-}
 
-enum class Action {
-    LIKE,
-}
+    private fun handleNewPost(content: NewPost) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle(
+                    getString(
+                        R.string.notification_user_new_posted,
+                        content.postAuthor
+                    )
+                )
+            .setStyle(NotificationCompat.BigTextStyle().bigText(content.postContent))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
 
-data class Like(
-    val userId: Long,
-    val userName: String,
-    val postId: Long,
-    val postAuthor: String,
-)
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
+    }
+}
