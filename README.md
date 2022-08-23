@@ -251,3 +251,24 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 Произведена миграция проекта на библиотеку ***ROOM***, с сохранением работоспособности приложения.
 
 </details>
+
+### Домашнее задание к занятию «4.3 Notifications & Pushes»
+
+<details close><summary> Задача Exceptions </summary>
+    <br>
+
+Добавлен обработчик ситуации, если в приложение придёт Notification, у которого поле action не соответствует ни одному значению из Enum'а Action.
+
+</details>
+<details close><summary> Задача New Post </summary>
+    <br>
+
+Реализовано получение уведомления о новом посте.
+
+Уведомления о новых постах отображаются в формате:
+
+    <имя пользователя> опубликовал новый пост:
+
+    Текст поста... (на несколько строк)
+
+</details>
