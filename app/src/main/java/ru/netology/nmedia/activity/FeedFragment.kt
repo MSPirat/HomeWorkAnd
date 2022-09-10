@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -30,6 +31,7 @@ class FeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         val binding = FragmentFeedBinding.inflate(
             inflater,
             container,
@@ -58,7 +60,16 @@ class FeedFragment : Fragment() {
                 }
 
                 override fun onShare(post: Post) {
-                    viewModel.shareById(post.id)
+//                    viewModel.shareById(post.id)
+                    val intent = Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, post.content)
+                        type = "text/plain"
+                    }
+
+                    val shareIntent =
+                        Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                    startActivity(shareIntent)
                 }
 
                 override fun onVideo(post: Post) {
@@ -79,6 +90,7 @@ class FeedFragment : Fragment() {
 
         binding.container.adapter = adapter
 
+        /*
         viewModel.data.observe(viewLifecycleOwner)
         { posts ->
             val newPost = adapter.itemCount < posts.size
@@ -86,6 +98,14 @@ class FeedFragment : Fragment() {
                 if (newPost) binding.container.smoothScrollToPosition(0)
             }
         }
+         */
+        viewModel.data.observe(viewLifecycleOwner,
+            { state ->
+                adapter.submitList(state.posts)
+                binding.progress.isVisible = state.loading
+                binding.errorGroup.isVisible = state.error
+                binding.emptyText.isVisible = state.empty
+            })
 
         binding.addPost.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)

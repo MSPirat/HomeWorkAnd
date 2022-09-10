@@ -29,6 +29,7 @@ class PostFragment : Fragment() {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
         val id = arguments?.idArg
 
+        /*
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             binding.postContent.apply {
                 posts.map { post ->
@@ -68,9 +69,6 @@ class PostFragment : Fragment() {
                                     when (menuItem.itemId) {
                                         R.id.remove -> {
                                             viewModel.removeById(post.id)
-//                                            findNavController().navigate(
-//                                                R.id.action_postFragment_to_feedFragment
-//                                            )
                                             findNavController().navigateUp()
                                             true
                                         }
@@ -93,6 +91,8 @@ class PostFragment : Fragment() {
                 }
             }
         }
+
+         */
         return binding.root
     }
 }
