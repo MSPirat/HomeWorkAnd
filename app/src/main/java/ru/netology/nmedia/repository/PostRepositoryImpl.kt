@@ -29,7 +29,7 @@ class PostRepositoryImpl : PostRepository {
 //    }
     override fun getAll(): List<Post> {
         val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
+            .url("${BASE_URL}/api/slow/posts")
             .build()
 
         return client.newCall(request)

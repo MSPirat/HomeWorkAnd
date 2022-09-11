@@ -42,14 +42,14 @@ android {
 }
 
 def core_version = "1.8.0"
-def appcompat_version = "1.5.0"
+def appcompat_version = "1.5.1"
 def mdc_version = "1.6.1"
 def constraintlayout_version = "2.1.4"
 def activity_version = "1.5.1"
 def fragment_version = "1.5.2"
 def lifecycle_version = "2.5.1"
 def recyclerview_version = "1.2.1"
-def nav_version = "2.5.1"
+def nav_version = "2.5.2"
 def gson_version = "2.9.1"
 def room_version = "2.4.3"
 def firebase_version = "30.3.2"

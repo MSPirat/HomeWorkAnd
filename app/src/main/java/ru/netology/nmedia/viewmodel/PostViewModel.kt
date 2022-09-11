@@ -15,7 +15,6 @@ import kotlin.concurrent.thread
 private val emptyPost = Post(
     0,
     "Somebody",
-    "",
     "Once upon a time",
     "",
     null,
