@@ -26,7 +26,7 @@ interface PostDao {
                 UPDATE PostEntity SET
                 likeNum = likeNum + CASE WHEN liked THEN -1 ELSE 1 END,
                 liked = CASE WHEN liked THEN 0 ELSE 1 END
-                WHERE id = :id;
+                WHERE id = :id
                 """
     )
     fun likeById(id: Long)
@@ -35,7 +35,7 @@ interface PostDao {
         """
                 UPDATE PostEntity SET
                 shareNum = shareNum + 1
-                WHERE id = :id;
+                WHERE id = :id
                 """
     )
     fun shareById(id: Long)

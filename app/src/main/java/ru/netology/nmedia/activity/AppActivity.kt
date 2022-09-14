@@ -17,7 +17,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
         super.onCreate(savedInstanceState)
 
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
-            println("current token: $it")
+            println("Your current token is: $it")
         }
 
 //        val binding = ActivityAppBinding.inflate(layoutInflater)

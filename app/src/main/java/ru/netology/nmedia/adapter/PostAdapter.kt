@@ -18,7 +18,7 @@ interface PostEventListener {
     fun onLike(post: Post)
     fun onShare(post: Post)
     fun onVideo(post: Post)
-    fun onPost(post: Post)
+//    fun onPost(post: Post)
 }
 
 class PostAdapter(
@@ -47,26 +47,20 @@ class PostViewHolder(
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
-            published.text = post.published
+            published.text = post.published.toString()
             content.text = post.content
-            like.text = CountLikeShareView.counterDecimal(post.likeNum)
-            share.text = CountLikeShareView.counterDecimal(post.shareNum)
-            view.text = CountLikeShareView.counterDecimal(post.viewNum)
 
             like.isChecked = post.liked
+//            like.text = CountLikeShareView.counterDecimal(post.likeNum)
+            like.text = "${post.likeNum}"
+            share.text = CountLikeShareView.counterDecimal(post.shareNum)
+            view.text = CountLikeShareView.counterDecimal(post.viewNum)
 
             if (post.video == null) {
                 binding.playVideoGroup.visibility = View.GONE
             } else {
                 binding.playVideoGroup.visibility = View.VISIBLE
             }
-
-            like.setOnClickListener { listener.onLike(post) }
-            share.setOnClickListener { listener.onShare(post) }
-            play.setOnClickListener { listener.onVideo(post) }
-            backgroundVideo.setOnClickListener { listener.onVideo(post) }
-
-            thisPost.setOnClickListener { listener.onPost(post) }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -87,6 +81,12 @@ class PostViewHolder(
                     }
                 }.show()
             }
+
+            like.setOnClickListener { listener.onLike(post) }
+            share.setOnClickListener { listener.onShare(post) }
+            play.setOnClickListener { listener.onVideo(post) }
+            backgroundVideo.setOnClickListener { listener.onVideo(post) }
+//            thisPost.setOnClickListener { listener.onPost(post) }
         }
     }
 }

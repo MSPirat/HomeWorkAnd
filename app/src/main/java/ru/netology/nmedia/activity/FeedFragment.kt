@@ -56,7 +56,13 @@ class FeedFragment : Fragment() {
                 }
 
                 override fun onLike(post: Post) {
-                    viewModel.likeById(post.id)
+//                    viewModel.likeById(post.id)
+                    if (post.liked) {
+                        viewModel.unlikeById(post.id)
+                    } else {
+                        viewModel.likeById(post.id)
+                    }
+                    viewModel.loadPosts()
                 }
 
                 override fun onShare(post: Post) {
@@ -77,14 +83,14 @@ class FeedFragment : Fragment() {
                     startActivity(intentVideo)
                 }
 
-                override fun onPost(post: Post) {
-                    findNavController().navigate(
-                        R.id.action_feedFragment_to_postFragment,
-                        Bundle().apply {
-                            idArg = post.id.toInt()
-                        }
-                    )
-                }
+//                override fun onPost(post: Post) {
+//                    findNavController().navigate(
+//                        R.id.action_feedFragment_to_postFragment,
+//                        Bundle().apply {
+//                            idArg = post.id.toInt()
+//                        }
+//                    )
+//                }
             }
         )
 
@@ -100,12 +106,15 @@ class FeedFragment : Fragment() {
         }
          */
         viewModel.data.observe(
-            viewLifecycleOwner
-        ) { state ->
-            adapter.submitList(state.posts)
-            binding.progress.isVisible = state.loading
-            binding.errorGroup.isVisible = state.error
-            binding.emptyText.isVisible = state.empty
+            viewLifecycleOwner, { state ->
+                adapter.submitList(state.posts)
+                binding.progress.isVisible = state.loading
+                binding.errorGroup.isVisible = state.error
+                binding.emptyText.isVisible = state.empty
+            })
+
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
         }
 
         binding.addPost.setOnClickListener {
