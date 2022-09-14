@@ -115,6 +115,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         thread { repository.likeById(id) }
     }
 
+    fun unlikeById(id: Long) {
+        thread { repository.unlikeById(id) }
+    }
+
     fun shareById(id: Long) {
         thread { repository.shareById(id) }
     }

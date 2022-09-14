@@ -29,7 +29,7 @@ class PostRepositoryImpl : PostRepository {
 //    }
     override fun getAll(): List<Post> {
         val request = Request.Builder()
-            .url("${BASE_URL}api/slow/posts")
+            .url("${BASE_URL}/api/slow/posts")
             .build()
 
         return client.newCall(request)
@@ -44,12 +44,29 @@ class PostRepositoryImpl : PostRepository {
 
     override fun likeById(id: Long) {
 //        dao.likeById(id)
-        // TODO: do this in homework
+        val request: Request = Request.Builder()
+            .post(gson.toJson(Unit).toRequestBody(jsonType))
+            .url("${BASE_URL}/api/posts/$id/likes")
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .close()
+    }
+
+    override fun unlikeById(id: Long) {
+        val request: Request = Request.Builder()
+            .delete(gson.toJson(id).toRequestBody(jsonType))
+            .url("${BASE_URL}/api/posts/$id/likes")
+            .build()
+
+        client.newCall(request)
+            .execute()
+            .close()
     }
 
     override fun shareById(id: Long) {
 //        dao.shareById(id)
-        // TODO
     }
 
     override fun removeById(id: Long) {

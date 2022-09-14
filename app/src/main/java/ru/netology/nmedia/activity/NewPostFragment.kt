@@ -30,9 +30,9 @@ class NewPostFragment : Fragment() {
             false
         )
 
-        arguments?.textArg?.let {
-            binding.content.setText(it)
-        }
+        arguments?.textArg?.let(
+            binding.content::setText
+        )
 
         binding.content.requestFocus()
         binding.save.setOnClickListener {
