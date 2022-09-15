@@ -42,27 +42,37 @@ class PostRepositoryImpl : PostRepository {
             }
     }
 
-    override fun likeById(id: Long) {
+    override fun likeById(id: Long): Post {
 //        dao.likeById(id)
         val request: Request = Request.Builder()
             .post(gson.toJson(Unit).toRequestBody(jsonType))
             .url("${BASE_URL}/api/posts/$id/likeNum")
             .build()
 
-        client.newCall(request)
+        return client.newCall(request)
             .execute()
-            .close()
+            .let {
+                it.body?.string() ?: error("Body is null")
+            }
+            .let {
+                gson.fromJson(it, Post::class.java)
+            }
     }
 
-    override fun unlikeById(id: Long) {
+    override fun unlikeById(id: Long): Post {
         val request: Request = Request.Builder()
             .delete()
             .url("${BASE_URL}/api/posts/$id/likeNum")
             .build()
 
-         client.newCall(request)
+        return client.newCall(request)
             .execute()
-            .close()
+            .let {
+                it.body?.string() ?: error("Body is null")
+            }
+            .let {
+                gson.fromJson(it, Post::class.java)
+            }
     }
 
     override fun shareById(id: Long) {

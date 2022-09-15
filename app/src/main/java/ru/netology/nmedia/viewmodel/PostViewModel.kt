@@ -75,7 +75,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun loadPosts() {
         thread {
             //Начинаем загрузку
-            _data.postValue(FeedModel(loading = true))
+            _data.postValue(FeedModel(loading = true, refreshing = true))
             try {
                 //Данные успешно получены
                 val posts = repository.getAll()
@@ -111,8 +111,24 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun likeById(id: Long) {
-        thread { repository.likeById(id) }
+    fun likeById(id: Long) {    //TODO проработать тщательно
+        thread {
+            _data.postValue(FeedModel(loading = true))
+            val oldPost = _data.value?.posts.orEmpty().find { it.id == id }
+            try {
+                if (oldPost != null) {
+                    if (!oldPost.liked) {
+                        val newPost = repository.likeById(id)
+                    } else {
+                        repository.unlikeById(id)
+                    }
+                }
+                loadPosts()
+                _data.postValue(FeedModel(loading = false))
+            } catch (e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        }
     }
 
     fun unlikeById(id: Long) {

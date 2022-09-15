@@ -106,12 +106,14 @@ class FeedFragment : Fragment() {
         }
          */
         viewModel.data.observe(
-            viewLifecycleOwner, { state ->
-                adapter.submitList(state.posts)
-                binding.progress.isVisible = state.loading
-                binding.errorGroup.isVisible = state.error
-                binding.emptyText.isVisible = state.empty
-            })
+            viewLifecycleOwner
+        ) { state ->
+            adapter.submitList(state.posts)
+            binding.progress.isVisible = state.loading
+            binding.errorGroup.isVisible = state.error
+            binding.emptyText.isVisible = state.empty
+            binding.swipeRefresh.isRefreshing = state.refreshing
+        }
 
         binding.retryButton.setOnClickListener {
             viewModel.loadPosts()
@@ -120,6 +122,13 @@ class FeedFragment : Fragment() {
         binding.addPost.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
+        binding.swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_light)
+
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.loadPosts()
+        }
+
         return binding.root
     }
 
