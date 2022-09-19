@@ -1,7 +1,6 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -10,27 +9,20 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.CountLikeShareView
 
-interface PostEventListener {
-    fun onEdit(post: Post)
-    fun onRemove(post: Post)
-    fun onLike(post: Post)
-    fun onShare(post: Post)
-    fun onVideo(post: Post)
-//    fun onPost(post: Post)
+interface OnInteractionListener {
+    fun onLike(post: Post) {}
+    fun onEdit(post: Post) {}
+    fun onRemove(post: Post) {}
+    fun onShare(post: Post) {}
 }
 
-class PostAdapter(
-    private val listener: PostEventListener
+class PostsAdapter(
+    private val onInteractionListener: OnInteractionListener,
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(
-            binding,
-            listener,
-        )
+        return PostViewHolder(binding, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -41,52 +33,44 @@ class PostAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val listener: PostEventListener,
+    private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
-            published.text = post.published.toString()
+            published.text = post.published
             content.text = post.content
-
-            like.isChecked = post.liked
-//            like.text = CountLikeShareView.counterDecimal(post.likeNum)
-            like.text = "${post.likeNum}"
-            share.text = CountLikeShareView.counterDecimal(post.shareNum)
-            view.text = CountLikeShareView.counterDecimal(post.viewNum)
-
-            if (post.video == null) {
-                binding.playVideoGroup.visibility = View.GONE
-            } else {
-                binding.playVideoGroup.visibility = View.VISIBLE
-            }
+            like.isChecked = post.likedByMe
+            like.text = "${post.likes}"
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
-                    inflate(R.menu.post_menu)
-
-                    setOnMenuItemClickListener { menuItem ->
-                        when (menuItem.itemId) {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
                             R.id.remove -> {
-                                listener.onRemove(post)
-                                return@setOnMenuItemClickListener true
+                                onInteractionListener.onRemove(post)
+                                true
                             }
                             R.id.edit -> {
-                                listener.onEdit(post)
-                                return@setOnMenuItemClickListener true
+                                onInteractionListener.onEdit(post)
+                                true
                             }
+
                             else -> false
                         }
                     }
                 }.show()
             }
 
-            like.setOnClickListener { listener.onLike(post) }
-            share.setOnClickListener { listener.onShare(post) }
-            play.setOnClickListener { listener.onVideo(post) }
-            backgroundVideo.setOnClickListener { listener.onVideo(post) }
-//            thisPost.setOnClickListener { listener.onPost(post) }
+            like.setOnClickListener {
+                onInteractionListener.onLike(post)
+            }
+
+            share.setOnClickListener {
+                onInteractionListener.onShare(post)
+            }
         }
     }
 }

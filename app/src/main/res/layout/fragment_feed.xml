@@ -80,9 +80,9 @@
         android:layout_margin="@dimen/common_spacing_large"
         android:clickable="true"
         android:contentDescription="@string/description_add_post"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_add_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

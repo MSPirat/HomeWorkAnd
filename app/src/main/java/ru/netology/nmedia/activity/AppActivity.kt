@@ -20,32 +20,26 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
             println("Your current token is: $it")
         }
 
-//        val binding = ActivityAppBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
-
         intent?.let {
             if (it.action != Intent.ACTION_SEND) {
                 return@let
             }
+
             val text = it.getStringExtra(Intent.EXTRA_TEXT)
-//            if (text.isNullOrBlank()) {
-//                Snackbar.make(binding.root, "Content can't be empty", LENGTH_INDEFINITE)
-//                    .setAction(android.R.string.ok) {
-//                        finish()
-//                    }
-//                    .show()
             if (text?.isNotBlank() != true) {
                 return@let
             }
 
             intent.removeExtra(Intent.EXTRA_TEXT)
-            findNavController(R.id.navigation).navigate(
-                R.id.action_feedFragment_to_newPostFragment,
-                Bundle().apply {
-                    textArg = text
-                }
-            )
+            findNavController(R.id.navigation)
+                .navigate(
+                    R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply {
+                        textArg = text
+                    }
+                )
         }
+
         checkGoogleApiAvailability()
     }
 
