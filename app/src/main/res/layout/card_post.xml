@@ -41,7 +41,6 @@
         android:layout_height="@dimen/posts_avatar_size"
         android:layout_centerInParent="true"
         android:contentDescription="@string/description_post_author_avatar"
-        android:src="@drawable/netology"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,12 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common_spacing_medium"
         android:autoLink="web"
-        app:constraint_referenced_ids="background_video"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/upper_menu_barrier"
         tools:text="@sample/posts.json/data/content" />
 
+    <!--
     <androidx.constraintlayout.widget.Group
         android:id="@+id/play_video_group"
         android:layout_width="match_parent"
@@ -88,7 +87,7 @@
         android:layout_marginTop="@dimen/common_spacing_medium"
         android:adjustViewBounds="true"
         android:contentDescription="@string/description_background_video"
-        android:src="@drawable/background_video"
+        android:src="@drawable/ic_background_video"
         app:layout_constraintEnd_toEndOf="@id/play_video_group"
         app:layout_constraintStart_toStartOf="@id/play_video_group"
         app:layout_constraintTop_toBottomOf="@+id/content" />
@@ -99,11 +98,12 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:contentDescription="@string/description_play"
-        android:src="@drawable/ic_baseline_play_circle_outline"
+        android:src="@drawable/ic_baseline_play_circle_outline_24"
         app:layout_constraintBottom_toBottomOf="@id/background_video"
         app:layout_constraintEnd_toEndOf="@id/background_video"
         app:layout_constraintStart_toStartOf="@id/background_video"
         app:layout_constraintTop_toTopOf="@id/background_video" />
+        -->
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/downer_menu_barrier"
@@ -111,7 +111,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:barrierMargin="@dimen/common_spacing_medium"
-        app:constraint_referenced_ids="content, background_video" />
+        app:constraint_referenced_ids="content" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
@@ -122,7 +122,7 @@
         android:checkable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"
-        tools:text="@sample/posts.json/data/likeNum" />
+        tools:text="@sample/posts.json/data/likes" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/share"
@@ -135,7 +135,7 @@
         android:contentDescription="@string/description_share"
         app:layout_constraintStart_toEndOf="@+id/like"
         app:layout_constraintTop_toTopOf="@+id/downer_menu_barrier"
-        tools:text="@sample/posts.json/data/shareNum" />
+        tools:text="@sample/posts.json/data/shares" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/view"
@@ -147,6 +147,6 @@
         android:contentDescription="@string/description_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/downer_menu_barrier"
-        tools:text="@sample/posts.json/data/viewNum" />
+        tools:text="@sample/posts.json/data/views" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

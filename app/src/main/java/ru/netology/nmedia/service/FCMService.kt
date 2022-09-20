@@ -16,7 +16,6 @@ import ru.netology.nmedia.service.notifications.NewPost
 import ru.netology.nmedia.service.notifications.Notification
 import kotlin.random.Random
 
-
 class FCMService : FirebaseMessagingService() {
     private val action = "action"
     private val content = "content"
@@ -67,7 +66,7 @@ class FCMService : FirebaseMessagingService() {
 
     private fun errorNotification(content: Notification) {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setShowWhen(false)
             .setContentTitle(
                 getString(
@@ -88,7 +87,7 @@ class FCMService : FirebaseMessagingService() {
 
     private fun handleLike(content: Like) {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(
                 getString(
                     R.string.notification_user_liked,
@@ -105,13 +104,13 @@ class FCMService : FirebaseMessagingService() {
 
     private fun handleNewPost(content: NewPost) {
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(
-                    getString(
-                        R.string.notification_user_new_posted,
-                        content.postAuthor
-                    )
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_new_posted,
+                    content.postAuthor
                 )
+            )
             .setStyle(NotificationCompat.BigTextStyle().bigText(content.postContent))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
