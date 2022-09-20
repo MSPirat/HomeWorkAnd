@@ -1,9 +1,14 @@
-# HomeWorkAnd
+### Android HomeWorks
+*****
 
-### Домашнее задание к занятию «1.1. Android Studio, SDK, эмулятор и первое приложение»
+<details close><summary> HomeWorkAnd (Block 1) </summary>
+    <br>
+    
+#### Домашнее задание к занятию «1.1. Android Studio, SDK, эмулятор и первое приложение»
 
 <details close><summary> Задача Code Like a Pro</summary>
     <br>
+    
 ✔️ При выполнении задачи используется **GitHub Actions** для сборки приложения в ***apk-файл*** (и последующего тестирования) при каждом пуше.
 
 Проект выводит на экран текстовую надпись **NMedia!** вместо **Hello, World**
@@ -14,7 +19,7 @@
 > minSdk (минимальная версия Android): 23 (Android 6.0)
 </details>  
 
-### Домашнее задание к занятию «1.2. Ресурсы, View и ViewGroup»
+#### Домашнее задание к занятию «1.2. Ресурсы, View и ViewGroup»
 
 <details close><summary> Задача Launcher Icon</summary>
   <br>
@@ -63,10 +68,12 @@ package="ru.netology.nmedia">
 зависимости от версии платформы это будут либо сгенерированные изображения в формате png, либо xml,
 в которых стоят ссылки на **foreground** и **background** ресурсы.
 </details>
+
   </details>
 
 <details close><summary> Задача Translations</summary>
   <br>
+  
 Добавление перевода на русский язык (для поддержания мультиязычности).
 
 Переводиться должны:
@@ -76,10 +83,11 @@ package="ru.netology.nmedia">
 
 </details>
 
-### Домашнее задание к занятию «1.3. Constraint Layout»
+#### Домашнее задание к занятию «1.3. Constraint Layout»
 
 <details close><summary> Задача Layout</summary>
     <br>
+    
 Вёрстка для получения приложения следующего вида :arrow_heading_down:
 
 ![](https://github.com/netology-code/and2-homeworks/blob/master/03_constraint_layout/pic/layout.png?raw=true)
@@ -89,7 +97,7 @@ package="ru.netology.nmedia">
 
 </details>
 
-### Домашнее задание к занятию «2.1. Обработка событий в Android»
+#### Домашнее задание к занятию «2.1. Обработка событий в Android»
 
 <details close><summary> Like, Share</summary>
     <br>
@@ -112,7 +120,7 @@ heavy_exclamation_mark::heavy_exclamation_mark::heavy_exclamation_mark:
 
 </details>
 
-### Домашнее задание к занятию «2.2. Архитектура: MVVM»
+#### Домашнее задание к занятию «2.2. Архитектура: MVVM»
 
 <details close><summary> Задача MVVM </summary>
     <br>
@@ -123,7 +131,7 @@ heavy_exclamation_mark::heavy_exclamation_mark::heavy_exclamation_mark:
 
 </details>
 
-### Домашнее задание к занятию «2.3. Отображение списков: RecyclerView»
+#### Домашнее задание к занятию «2.3. Отображение списков: RecyclerView»
 
 <details close><summary> Задача RecyclerView </summary>
     <br>
@@ -134,7 +142,7 @@ heavy_exclamation_mark::heavy_exclamation_mark::heavy_exclamation_mark:
 
 </details>
 
-### Домашнее задание к занятию «2.4. CRUD: списки, добавление, удаление, изменение»
+#### Домашнее задание к занятию «2.4. CRUD: списки, добавление, удаление, изменение»
 
 <details close><summary> Задача Задача CRUD и отмена редактирования </summary>
     <br>
@@ -157,7 +165,7 @@ View объединены
 
 </details>
 
-### Домашнее задание к занятию «3.1. Material Design»
+#### Домашнее задание к занятию «3.1. Material Design»
 
 <details close><summary> Задача Кнопки </summary>
     <br>
@@ -172,7 +180,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 
 </details>
 
-### Домашнее задание к занятию «3.2 Организация навигации (перемещение между Activity)»
+#### Домашнее задание к занятию «3.2 Организация навигации (перемещение между Activity)»
 
 <details close><summary> Задача Editing </summary>
     <br>
@@ -180,9 +188,9 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 Реализованы создание поста и функция редактирования поста в отдельных *Activity*.
 
 </details>
+
 <details close><summary> Задача YouTube Video </summary>
-  
-<br>
+    <br>
 
 На **Intent'ах** в Android строится большая часть взаимодействия между приложениями, в частности, задействуются другие приложения для отображения нужного контента/выполнения действий и т.д. (Самые распространённые [Intent'ы](https://developer.android.com/guide/components/intents-common))
     
@@ -191,7 +199,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 <details close>
     
 <summary> :pushpin: Реализация </summary>
-<br>
+    <br>
 
     Вместо обложки видео установлена картинка-заглушка и кнопка Play.
     Для запуска Intent'а можно кликать и на кнопке, и на обложке (т.е. пользователю не обязательно попадать в саму кнопку).
@@ -204,7 +212,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
     </details>
     
 
-### Домашнее задание к занятию «3.3 Хранение данных»
+#### Домашнее задание к занятию «3.3 Хранение данных»
 
 <details close><summary> Задача Хранение данных </summary>
     <br>
@@ -214,7 +222,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 
 </details>
 
-### Домашнее задание к занятию «3.4 Fragments, FragmentManager»
+#### Домашнее задание к занятию «3.4 Fragments, FragmentManager»
 
 <details close><summary> Задача Details </summary>
     <br>
@@ -234,7 +242,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 
 </details>
 
-### Домашнее задание к занятию «4.1 SQL и SQLite»
+#### Домашнее задание к занятию «4.1 SQL и SQLite»
 
 <details close><summary> Задача SQL </summary>
     <br>
@@ -243,7 +251,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 
 </details>
 
-### Домашнее задание к занятию «4.2 Библиотека Room»
+#### Домашнее задание к занятию «4.2 Библиотека Room»
 
 <details close><summary> Задача Room </summary>
     <br>
@@ -252,7 +260,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 
 </details>
 
-### Домашнее задание к занятию «4.3 Notifications & Pushes»
+#### Домашнее задание к занятию «4.3 Notifications & Pushes»
 
 <details close><summary> Задача Exceptions </summary>
     <br>
@@ -272,3 +280,49 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
     Текст поста... (на несколько строк)
 
 </details>
+</details>
+
+*****
+
+<details close><summary> HomeWorkAndIn (Block 2) </summary>
+    <br>
+    
+#### Домашнее задание к занятию «1.2. Сетевые запросы: Main Thread & Background»
+
+<details close><summary> Задача Likes </summary>
+    <br>
+    
+Предоставлены описания API для реализации:
+
+1. Добавление лайка:
+    `POST /api/posts/{id}/likes`
+
+2. Удаление лайка:
+    `DELETE /api/posts/{id}/likes`
+
+Где **{id}** - это идентификатор поста.
+
+В ответ на оба запроса сервер присылает JSON обновленного поста, который можно использовать для отображения измененного поста в ленте.
+
+В проекте реализвана функциональность простановки/снятия лайка. Для этого используется [код сервера с лекции](https://github.com/netology-code/andin-code/tree/master/02_threads/server).
+
+> После выполнения запроса список постов обновляется, для отображения пользователю актуального количества лайков.
+
+</details>
+<details close><summary> Задача Swipe to Refresh* </summary>
+    <br>
+    
+Реализована функциональность `Swipe To Refresh` в списках:
+
+- Пользователь "тянет" сверху вниз список (или любое другое View)
+- Появляется иконка обновления
+- Список обновляется
+
+>Для этого:
+>
+>1. Добавлена необходимая [зависимость в build.gradle](https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout)
+>2. ***RecyclerView*** завёрнут `в androidx.swiperefreshlayout.widget.SwipeRefreshLayout`
+>3. `OnRefreshListener` заново запрашивает все посты с сервера
+   
+</details>        
+    </details>
