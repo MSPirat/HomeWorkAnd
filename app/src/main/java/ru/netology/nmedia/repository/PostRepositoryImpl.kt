@@ -35,7 +35,7 @@ class PostRepositoryImpl : PostRepository {
             }
     }
 
-    override fun getAllAsync(callback: PostRepository.GetAllCallback) {
+    override fun getAllAsync(callback: PostRepository.Callback<List<Post>>) {
         val request: Request = Request.Builder()
             .url("${BASE_URL}/api/slow/posts")
             .build()
@@ -57,26 +57,40 @@ class PostRepositoryImpl : PostRepository {
             })
     }
 
-    override fun likeById(id: Long) {
+    override fun likeByIdAsync(id: Long, callback: PostRepository.Callback<Post>) {
         val request: Request = Request.Builder()
-            .post(gson.toJson(Unit).toRequestBody(jsonType))
+            .post("".toRequestBody(jsonType))
             .url("${BASE_URL}/api/posts/$id/likes")
             .build()
 
         client.newCall(request)
-            .execute()
-            .close()
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    callback.onSuccess(gson.fromJson(response.body?.string(), Post::class.java))
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+            })
     }
 
-    override fun unlikeById(id: Long) {
+    override fun unlikeByIdAsync(id: Long, callback: PostRepository.Callback<Post>) {
         val request: Request = Request.Builder()
-            .delete(gson.toJson(id).toRequestBody(jsonType))
+            .delete()
             .url("${BASE_URL}/api/posts/$id/likes")
             .build()
 
         client.newCall(request)
-            .execute()
-            .close()
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    callback.onSuccess(gson.fromJson(response.body?.string(), Post::class.java))
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+            })
     }
 
     override fun shareById(id: Long) {
