@@ -93,28 +93,39 @@ class PostRepositoryImpl : PostRepository {
             })
     }
 
-    override fun shareById(id: Long) {
-    }
-
-    override fun save(post: Post) {
+    override fun saveAsync(post: Post, callback: PostRepository.Callback<Post>) {
         val request: Request = Request.Builder()
             .post(gson.toJson(post).toRequestBody(jsonType))
             .url("${BASE_URL}/api/slow/posts")
             .build()
 
         client.newCall(request)
-            .execute()
-            .close()
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    callback.onSuccess(post)
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+            })
     }
 
-    override fun removeById(id: Long) {
+    override fun removeByIdAsync(id: Long, callback: PostRepository.Callback<Post>) {
         val request: Request = Request.Builder()
             .delete()
             .url("${BASE_URL}/api/slow/posts/$id")
             .build()
 
         client.newCall(request)
-            .execute()
-            .close()
+            .enqueue(object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    callback.onSuccess(Post(0, "", "", "", false))
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    callback.onError(e)
+                }
+            })
     }
 }
