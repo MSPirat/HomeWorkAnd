@@ -324,5 +324,14 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 >2. ***RecyclerView*** завёрнут `в androidx.swiperefreshlayout.widget.SwipeRefreshLayout`
 >3. `OnRefreshListener` заново запрашивает все посты с сервера
    
-</details>        
+</details>
+
+#### Домашнее задание к занятию «2.2 Современные подходы работы с многопоточностью»
+
+<details close><summary> Задача OkHttp enqueue </summary>
+    <br>
+    
+Перевод функциональности проекта с использования функции thread на enqueue из OkHttp. После выполнения запроса список постов обновляется, для отображения пользователю актуального количества лайков.
+
+</details>
     </details>
