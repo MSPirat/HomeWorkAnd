@@ -1,6 +1,7 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
@@ -38,12 +39,14 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
+
         binding.apply {
             author.text = post.author
             published.text = post.published
             content.text = post.content
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+            attachment.visibility = View.GONE
 
             val url = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
             Glide.with(itemView)
@@ -53,6 +56,18 @@ class PostViewHolder(
                 .timeout(10_000)
                 .circleCrop()
                 .into(avatar)
+
+            val urlAttachment = "http://10.0.2.2:9999/images/${post.attachment?.url}"
+            if (post.attachment != null) {
+                attachment.visibility = View.VISIBLE
+                Glide.with(itemView)
+                    .load(urlAttachment)
+                    .placeholder(R.drawable.ic_loading_24dp)
+                    .error(R.drawable.ic_baseline_error_outline_24dp)
+                    .timeout(10_000)
+                    .centerCrop()
+                    .into(attachment)
+            }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
