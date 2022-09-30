@@ -6,6 +6,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -43,6 +44,15 @@ class PostViewHolder(
             content.text = post.content
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
+
+            val url = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
+            Glide.with(itemView)
+                .load(url)
+                .placeholder(R.drawable.ic_loading_24dp)
+                .error(R.drawable.ic_baseline_error_outline_24dp)
+                .timeout(10_000)
+                .circleCrop()
+                .into(avatar)
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
