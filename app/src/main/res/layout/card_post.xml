@@ -79,7 +79,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/common_spacing_medium"
         android:adjustViewBounds="true"
-        android:visibility="visible"
+        android:visibility="gone"
         android:contentDescription="@string/description_post_attachment"
         app:layout_constraintBottom_toTopOf="@id/downer_menu_barrier"
         app:layout_constraintEnd_toEndOf="parent"

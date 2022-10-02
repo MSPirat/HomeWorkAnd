@@ -65,8 +65,9 @@ class PostViewHolder(
                     .placeholder(R.drawable.ic_loading_24dp)
                     .error(R.drawable.ic_baseline_error_outline_24dp)
                     .timeout(10_000)
-                    .centerCrop()
                     .into(attachment)
+            } else {
+                attachment.visibility = View.GONE
             }
 
             menu.setOnClickListener {
