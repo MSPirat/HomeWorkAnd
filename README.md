@@ -334,4 +334,31 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 Перевод функциональности проекта с использования функции thread на enqueue из OkHttp. После выполнения запроса список постов обновляется, для отображения пользователю актуального количества лайков.
 
 </details>
+
+#### Домашнее задание к занятию «2.3 Многопоточность в Android»
+
+<details close><summary> Задача Glide </summary>
+    <br>
+    
+Реализовано отображение аватарок в приложении с использованием [проекта сервера](https://github.com/netology-code/andin-code/tree/master/06_android).
+
+В качестве библиотеки для загрузки изображений использована библиотека ***Glide***.
+
+</details>
+
+<details close><summary> Задача Rounded </summary>
+    <br>
+    
+Для реализации круглых аватарок, среди [методов трансформации](https://bumptech.github.io/glide/doc/transformations.html) был выбран наиболее подходящий класс *CircleCrop*.
+
+</details>
+
+<details close><summary> Задача Attachments* </summary>
+    <br>
+    
+Для тех постов, у которых есть вложения (типа - *IMAGE*) ***attachment*** на сервере, реализовано отображение соответствующей картинки в посте :
+
+![](https://github.com/netology-code/andin-homeworks/blob/master/06_android/pic/attachment.png?raw=true)
+
+</details>
     </details>
