@@ -13,6 +13,7 @@
     <string name="description_liked" translatable="false" />
     <string name="description_more_vert" translatable="false" />
     <string name="description_play" translatable="false" />
+    <string name="description_post_attachment" translatable="false" />
     <string name="description_post_author_avatar" translatable="false" />
     <string name="description_post_like" translatable="false" />
     <string name="description_save" translatable="false" />
