@@ -6,7 +6,6 @@ import retrofit2.Response
 import ru.netology.nmedia.api.PostApiServiceHolder
 import ru.netology.nmedia.dto.Post
 
-
 class PostRepositoryImpl : PostRepository {
 
     override fun getAllAsync(callback: PostRepository.Callback<List<Post>>) {

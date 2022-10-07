@@ -44,7 +44,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.value = FeedModel(error = true)
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
         })
 //        println(2)
@@ -58,7 +60,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.postValue(
+                        FeedModel(error = true, messageOfCodeError = e.message.toString())
+                    )
                 }
             })
         }
@@ -84,7 +88,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
         })
     }
@@ -96,9 +102,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
-
         })
     }
 
