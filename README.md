@@ -361,4 +361,13 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 ![](https://github.com/netology-code/andin-homeworks/blob/master/06_android/pic/attachment.png?raw=true)
 
 </details>
+
+#### Домашнее задание к занятию «2.4 Retrofit (CRUD)»
+
+<details close><summary> Задача Buggy Server </summary>
+    <br>
+    
+Рассмотрен альтернативный (но очень частый) сценарий - [сервер](https://github.com/netology-code/andin-homeworks/blob/master/07_crud/server) периодически (а именно в 50% случаев) присылает не 2xx коды ответа. С его использованием реализована обработка подобного рода ошибок методом вывода на экран пользователя **Snackbar'а**
+
+</details>
     </details>
