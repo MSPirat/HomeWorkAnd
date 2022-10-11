@@ -73,7 +73,7 @@ class FeedFragment : Fragment() {
 
             if (state.error) {
                 Snackbar.make(
-                    requireView(),
+                    binding.root,
                     state.messageOfCodeError,
                     BaseTransientBottomBar.LENGTH_LONG
                 ).show()
