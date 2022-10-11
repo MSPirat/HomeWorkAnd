@@ -40,11 +40,13 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         repository.getAllAsync(object : PostRepository.Callback<List<Post>> {
             override fun onSuccess(posts: List<Post>) {
 //                println(Thread.currentThread().name)
-                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+                _data.value = FeedModel(posts = posts, empty = posts.isEmpty())
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
         })
 //        println(2)
@@ -58,7 +60,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+                    _data.postValue(
+                        FeedModel(error = true, messageOfCodeError = e.message.toString())
+                    )
                 }
             })
         }
@@ -84,7 +88,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
         })
     }
@@ -96,18 +102,19 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+                _data.postValue(
+                    FeedModel(error = true, messageOfCodeError = e.message.toString())
+                )
             }
-
         })
     }
 
     fun removeById(id: Long) {
         val old = _data.value?.posts.orEmpty()
-        repository.removeByIdAsync(id, object : PostRepository.Callback<Post> {
-            override fun onSuccess(posts: Post) {
+        repository.removeByIdAsync(id, object : PostRepository.Callback<Unit> {
+            override fun onSuccess(posts: Unit) {
                 _data.postValue(
-                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    _data.value?.copy(posts = old
                         .filter { it.id != id }
                     )
                 )
