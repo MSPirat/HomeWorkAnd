@@ -17,6 +17,7 @@ import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.RetryTypes
 import ru.netology.nmedia.viewmodel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -26,16 +27,19 @@ class FeedFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
-                    Bundle().apply
-                    { textArg = post.content })
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_newPostFragment,
+                    Bundle().apply {
+                        textArg = post.content
+                    }
+                )
             }
 
             override fun onLike(post: Post) {
@@ -63,20 +67,34 @@ class FeedFragment : Fragment() {
                 startActivity(shareIntent)
             }
         })
+
         binding.container.adapter = adapter
+
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
+            binding.emptyText.isVisible = state.empty
+        }
+
+        viewModel.state.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
             binding.errorGroup.isVisible = state.error
-            binding.emptyText.isVisible = state.empty
             binding.swipeRefresh.isRefreshing = state.refreshing
 
             if (state.error) {
                 Snackbar.make(
                     binding.root,
-                    state.messageOfCodeError,
+                    R.string.error_loading,
                     BaseTransientBottomBar.LENGTH_LONG
-                ).show()
+                ).setAction(R.string.retry_loading) {
+                    when (state.retryType) {
+                        RetryTypes.LIKE -> viewModel.likeById(state.retryId)
+                        RetryTypes.UNLIKE -> viewModel.unlikeById(state.retryId)
+                        RetryTypes.SAVE -> viewModel.retrySave(state.retryPost)
+                        RetryTypes.REMOVE -> viewModel.removeById(state.retryId)
+                        else -> viewModel.loadPosts()
+                    }
+                }
+                    .show()
             }
         }
 
