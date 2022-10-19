@@ -23,7 +23,7 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     override val data = dao.getAll().map { it.toDto() }
         .flowOn(Dispatchers.Default)
 
-    override fun getNewerCount(firstId: Long): Flow<Int> = flow<Int> {
+    override fun getNewerCount(firstId: Long): Flow<Int> = flow {
         try {
             while (true) {
                 val response = PostsApi.service.getNewer(firstId)

@@ -98,6 +98,22 @@ class FeedFragment : Fragment() {
             }
         }
 
+        binding.newPosts.visibility = View.GONE
+
+        viewModel.newerCount.observe(viewLifecycleOwner) {
+            if (it > 0) {
+                binding.newPosts.text = getString(R.string.new_posts)
+                binding.newPosts.visibility = View.VISIBLE
+            }
+            println("Newer count: $it")
+        }
+
+        binding.newPosts.setOnClickListener {
+            binding.newPosts.visibility = View.GONE
+            binding.container.smoothScrollToPosition(0)
+            viewModel.loadNewPosts()
+        }
+
         binding.retryButton.setOnClickListener {
             viewModel.loadPosts()
         }
@@ -113,25 +129,6 @@ class FeedFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.loadPosts()
         }
-
-        binding.newPosts.visibility = View.GONE
-
-        viewModel.newerCount.observe(viewLifecycleOwner) {
-            //TODO Make in HomeWork
-//            val text: String = binding.newPosts.text.toString()
-            binding.newPosts.text
-            if (it > 0) {
-                binding.newPosts.visibility = View.VISIBLE
-            }
-            println("Newer count: $it")
-        }
-
-        binding.newPosts.setOnClickListener {
-            binding.newPosts.visibility = View.GONE
-            viewModel.loadNewPosts()
-            binding.container.smoothScrollToPosition(0)
-        }
-
         return binding.root
     }
 }
