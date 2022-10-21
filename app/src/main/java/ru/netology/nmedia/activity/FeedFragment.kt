@@ -113,6 +113,12 @@ class FeedFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.loadPosts()
         }
+
+        viewModel.newerCount.observe(viewLifecycleOwner) {
+            //TODO Make in HomeWork
+            println("Newer count: $it")
+        }
+
         return binding.root
     }
 }
