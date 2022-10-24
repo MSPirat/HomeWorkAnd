@@ -114,9 +114,22 @@ class FeedFragment : Fragment() {
             viewModel.loadPosts()
         }
 
+        binding.newPosts.visibility = View.GONE
+
         viewModel.newerCount.observe(viewLifecycleOwner) {
             //TODO Make in HomeWork
+//            val text: String = binding.newPosts.text.toString()
+            binding.newPosts.text
+            if (it > 0) {
+                binding.newPosts.visibility = View.VISIBLE
+            }
             println("Newer count: $it")
+        }
+
+        binding.newPosts.setOnClickListener {
+            binding.newPosts.visibility = View.GONE
+            viewModel.loadNewPosts()
+            binding.container.smoothScrollToPosition(0)
         }
 
         return binding.root

@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.api.PostsApi
@@ -48,7 +47,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val postCreated: LiveData<Unit>
         get() = _postCreated
 
-    private val scope = MainScope()
+//    private val scope = MainScope()
 
     init {
         loadPosts()
@@ -129,8 +128,18 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        scope.cancel()
+    fun loadNewPosts() = viewModelScope.launch {
+        try {
+            _state.value = FeedModelState(loading = true)
+            repository.getNewPosts()
+            _state.value = FeedModelState()
+        } catch (e: Exception) {
+            _state.value = FeedModelState(error = true)
+        }
     }
+
+//    override fun onCleared() {
+//        super.onCleared()
+//        scope.cancel()
+//    }
 }
