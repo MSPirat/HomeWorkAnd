@@ -2,8 +2,10 @@ package ru.netology.nmedia.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.api.PostsApi
 import ru.netology.nmedia.db.AppDb
@@ -29,12 +31,19 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PostRepository =
         PostRepositoryImpl(AppDb.getInstance(application).postDao())
+
     val data: LiveData<FeedModel> = repository.data.map { FeedModel(it, it.isEmpty()) }
+        .asLiveData(Dispatchers.Default)
     private val edited = MutableLiveData(empty)
 
     private val _state = MutableLiveData(FeedModelState())
     val state: LiveData<FeedModelState>
         get() = _state
+
+    val newerCount: LiveData<Int> = data.switchMap {
+        repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
+            .asLiveData(Dispatchers.Default)
+    }
 
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>
@@ -49,7 +58,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun loadPosts() = viewModelScope.launch {
         try {
             _state.value = FeedModelState(loading = true)
-            repository.getAll()
+            repository.getNewPosts()
             _state.value = FeedModelState()
         } catch (e: Exception) {
             _state.value = FeedModelState(error = true)
@@ -118,6 +127,16 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             repository.removeById(id)
         } catch (e: Exception) {
             _state.value = FeedModelState(error = true, retryType = RetryTypes.REMOVE, retryId = id)
+        }
+    }
+
+    fun loadNewPosts() = viewModelScope.launch {
+        try {
+            _state.value = FeedModelState(loading = true)
+            repository.getNewPosts()
+            _state.value = FeedModelState()
+        } catch (e: Exception) {
+            _state.value = FeedModelState(error = true)
         }
     }
 

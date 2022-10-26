@@ -29,6 +29,7 @@
     <string name="error_notification_title">You are using an old version of the application</string>
     <string name="google_play_unavailable">Google API Unavailable</string>
     <string name="main_screen_message">NMedia!</string>
+    <string name="new_posts">New Posts</string>
     <string name="notification_user_liked">User %1$s liked %2$s\'s post</string>
     <string name="notification_user_new_posted">%1$s posted a new post</string>
     <string name="post_input_text_hint">Edit Post text</string>
