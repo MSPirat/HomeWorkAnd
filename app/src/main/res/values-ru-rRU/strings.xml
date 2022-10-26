@@ -21,5 +21,6 @@
     <string name="post_menu_remove">Удалить</string>
     <string name="post_menu_edit">Редактировать</string>
     <string name="retry_loading">Повторить</string>
+    <string name="save">Сохранить</string>
 
 </resources>
