@@ -5,6 +5,7 @@
     <string name="channel_remote_description">Уведомления с удалённого сервера</string>
     <string name="channel_remote_name">Уведомление сервера</string>
     <string name="chooser_share_post">Поделиться постом</string>
+    <string name="clear">Очистить</string>
     <string name="edit_message">Редактирование</string>
     <string name="empty_content_error">Контент отсутствует</string>
     <string name="empty_post_error">Пост пустой</string>

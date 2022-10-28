@@ -2,10 +2,15 @@ package ru.netology.nmedia.activity
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.github.dhaval2404.imagepicker.ImagePicker
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentNewPostBinding
 import ru.netology.nmedia.util.AndroidUtils
@@ -21,6 +26,19 @@ class NewPostFragment : Fragment() {
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
+
+    private val photoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            when (it.resultCode) {
+                ImagePicker.RESULT_ERROR -> {
+                    Toast.makeText(requireContext(), "Image pick Error", Toast.LENGTH_SHORT)
+                }
+                else -> {
+                    val uri = it.data?.data ?: return@registerForActivityResult
+                    viewModel.changePhoto(uri, uri.toFile())
+                }
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +68,29 @@ class NewPostFragment : Fragment() {
                     else -> false
                 }
         }, viewLifecycleOwner)
+
+        binding.takePhoto.setOnClickListener {
+            ImagePicker.Builder(this)
+                .cameraOnly()
+                .maxResultSize(2048, 2048)
+                .createIntent(photoLauncher::launch)
+        }
+
+        binding.pickPhoto.setOnClickListener {
+            ImagePicker.Builder(this)
+                .galleryOnly()
+                .maxResultSize(2048, 2048)
+                .createIntent(photoLauncher::launch)
+        }
+
+        viewModel.photo.observe(viewLifecycleOwner) {
+            binding.photoLayout.isVisible = it != null
+            binding.photo.setImageURI(it?.uri)
+        }
+
+        binding.deletePhoto.setOnClickListener {
+            viewModel.changePhoto(null, null)
+        }
 
 //        val binding = FragmentNewPostBinding.inflate(
 //            inflater,
