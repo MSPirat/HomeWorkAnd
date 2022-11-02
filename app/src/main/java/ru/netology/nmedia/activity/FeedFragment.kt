@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
@@ -34,12 +33,6 @@ class FeedFragment : Fragment() {
         val adapter = PostsAdapter(object : OnInteractionListener {
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                findNavController().navigate(
-                    R.id.action_feedFragment_to_newPostFragment,
-                    Bundle().apply {
-                        textArg = post.content
-                    }
-                )
             }
 
             override fun onLike(post: Post) {
@@ -65,6 +58,15 @@ class FeedFragment : Fragment() {
                 val shareIntent =
                     Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
+            }
+
+            override fun onImage(image: String) {
+                val bundle = Bundle().apply {
+                    putString("image", image)
+                }
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_imageFragment, bundle
+                )
             }
         })
 
@@ -98,8 +100,6 @@ class FeedFragment : Fragment() {
             }
         }
 
-        binding.newPosts.visibility = View.GONE
-
         viewModel.newerCount.observe(viewLifecycleOwner) {
             if (it > 0) {
                 binding.newPosts.text = getString(R.string.new_posts)
@@ -109,9 +109,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.newPosts.setOnClickListener {
-            binding.newPosts.visibility = View.GONE
-            binding.container.smoothScrollToPosition(0)
             viewModel.loadNewPosts()
+            binding.container.smoothScrollToPosition(0)
+            binding.newPosts.visibility = View.GONE
+
         }
 
         binding.retryButton.setOnClickListener {

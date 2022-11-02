@@ -39,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:contentDescription="@string/description_photo"
                     tools:srcCompat="@tools:sample/avatars[2]" />
 
                 <Button
@@ -68,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
+            android:contentDescription="@string/description_take_photo"
             android:padding="@dimen/common_spacing_medium"
             android:src="@drawable/ic_baseline_photo_camera_48" />
 
@@ -76,18 +78,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
+            android:contentDescription="@string/description_pick_photo"
             android:padding="@dimen/common_spacing_medium"
             android:src="@drawable/ic_baseline_image_48" />
 
 
     </LinearLayout>
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/save"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:contentDescription="@string/description_save_post"-->
-    <!--        app:layout_anchor="@id/bottomAppBar"-->
-    <!--        app:srcCompat="@drawable/ic_ok_24dp" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

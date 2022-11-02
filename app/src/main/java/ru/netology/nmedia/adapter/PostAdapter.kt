@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ru.netology.nmedia.BuildConfig.BASE_URL
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
@@ -17,6 +18,7 @@ interface OnInteractionListener {
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onShare(post: Post) {}
+    fun onImage(image: String) {}
 }
 
 class PostsAdapter(
@@ -48,7 +50,7 @@ class PostViewHolder(
             like.text = "${post.likes}"
             attachment.visibility = View.GONE
 
-            val url = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
+            val url = "${BASE_URL}/avatars/${post.authorAvatar}"
             Glide.with(itemView)
                 .load(url)
                 .placeholder(R.drawable.ic_loading_24dp)
@@ -57,7 +59,7 @@ class PostViewHolder(
                 .circleCrop()
                 .into(avatar)
 
-            val urlAttachment = "http://10.0.2.2:9999/images/${post.attachment?.url}"
+            val urlAttachment = "${BASE_URL}/media/${post.attachment?.url}"
             if (post.attachment != null) {
                 attachment.visibility = View.VISIBLE
                 Glide.with(itemView)
@@ -97,6 +99,12 @@ class PostViewHolder(
             share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
+
+            attachment.setOnClickListener {
+                post.attachment?.let { attach ->
+                    onInteractionListener.onImage(attach.url)
+                }
+            }
         }
     }
 }
@@ -109,6 +117,4 @@ class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
     override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem == newItem
     }
-
-    override fun getChangePayload(oldItem: Post, newItem: Post): Any = Unit
 }
