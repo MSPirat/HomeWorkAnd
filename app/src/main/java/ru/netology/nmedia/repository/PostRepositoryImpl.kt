@@ -22,21 +22,23 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     override val data = dao.getAll().map(List<PostEntity>::toDto)
         .flowOn(Dispatchers.Default)
 
-    override fun getNewerCount(firstId: Long): Flow<Int> = flow {
-        while (true) {
-            val response = PostsApi.service.getNewer(firstId)
+    override suspend fun getAll() {
+        try {
+            dao.getAll()
+            val response = PostsApi.service.getAll()
             if (!response.isSuccessful) {
                 throw ApiException(response.code(), response.message())
             }
-            val body =
-                response.body() ?: throw ApiException(response.code(), response.message())
-            dao.insert(body.toEntity())
-            emit(body.size)
-            delay(10_000L)
+            val body = response.body() ?: throw ApiException(response.code(), response.message())
+            dao.insert(body.toEntity().map {
+                it.copy(viewed = true)
+            })
+        } catch (e: IOException) {
+            throw NetworkException
+        } catch (e: Exception) {
+            throw UnknownException
         }
     }
-        .catch { e -> throw AppError.from(e) }
-        .flowOn(Dispatchers.Default)
 
     override suspend fun getNewPosts() {
         try {
@@ -48,14 +50,45 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
         }
     }
 
-    override suspend fun getAll() {
+    override fun getNewerCount(firstId: Long): Flow<Int> = flow {
+        while (true) {
+            val response = PostsApi.service.getNewer(firstId)
+            if (!response.isSuccessful) {
+                throw ApiException(response.code(), response.message())
+            }
+            val body =
+                response.body() ?: throw ApiException(response.code(), response.message())
+            dao.insert(body.toEntity().map {
+                it.copy(viewed = false)
+            })
+            emit(body.size)
+            delay(10_000L)
+        }
+    }
+        .catch { e -> throw AppError.from(e) }
+        .flowOn(Dispatchers.Default)
+
+    override suspend fun save(post: Post) {
         try {
-            val response = PostsApi.service.getAll()
+            val response = PostsApi.service.save(post)
             if (!response.isSuccessful) {
                 throw ApiException(response.code(), response.message())
             }
             val body = response.body() ?: throw ApiException(response.code(), response.message())
-            dao.insert(body.toEntity())
+            dao.insert(PostEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkException
+        } catch (e: Exception) {
+            throw UnknownException
+        }
+    }
+
+    override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
+        try {
+            val media = uploadWithContent(upload)
+            val postWithAttachment =
+                post.copy(attachment = Attachment(media.id, TypeAttachment.IMAGE))
+            save(postWithAttachment)
         } catch (e: IOException) {
             throw NetworkException
         } catch (e: Exception) {
@@ -108,34 +141,6 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
             }
             val body = response.body() ?: throw ApiException(response.code(), response.message())
             dao.insert(PostEntity.fromDto(body))
-        } catch (e: IOException) {
-            throw NetworkException
-        } catch (e: Exception) {
-            throw UnknownException
-        }
-    }
-
-    override suspend fun save(post: Post) {
-        try {
-            val response = PostsApi.service.save(post)
-            if (!response.isSuccessful) {
-                throw ApiException(response.code(), response.message())
-            }
-            val body = response.body() ?: throw ApiException(response.code(), response.message())
-            dao.insert(PostEntity.fromDto(body))
-        } catch (e: IOException) {
-            throw NetworkException
-        } catch (e: Exception) {
-            throw UnknownException
-        }
-    }
-
-    override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
-        try {
-            val media = uploadWithContent(upload)
-            val postWithAttachment =
-                post.copy(attachment = Attachment(media.id, TypeAttachment.IMAGE))
-            save(postWithAttachment)
         } catch (e: IOException) {
             throw NetworkException
         } catch (e: Exception) {

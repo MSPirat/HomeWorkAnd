@@ -5,24 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.BuildConfig.BASE_URL
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.FragmentImageBinding
-import ru.netology.nmedia.util.StringArg
-import ru.netology.nmedia.viewmodel.PostViewModel
 
 class ImageFragment : Fragment() {
-
-    companion object {
-        var Bundle.textArg: String? by StringArg
-    }
-
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,12 +20,12 @@ class ImageFragment : Fragment() {
     ): View {
 
         val binding = FragmentImageBinding.inflate(inflater, container, false)
-        val attachmentUrl = arguments?.textArg
+        val attachmentUrl = arguments?.getString("image")
 
         binding.apply {
             imageFullScreen.visibility = View.GONE
             attachmentUrl?.let {
-                val url = "${BuildConfig.BASE_URL}/media/${it}"
+                val url = "${BASE_URL}/media/${it}"
 
                 Glide.with(imageFullScreen)
                     .load(url)
