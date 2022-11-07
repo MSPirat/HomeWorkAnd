@@ -1,5 +1,6 @@
 package ru.netology.nmedia.api
 
+import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
 import java.util.concurrent.TimeUnit
@@ -20,9 +22,21 @@ private val logging = HttpLoggingInterceptor().apply {
     }
 }
 
+private val authInterceptor = Interceptor { chain ->
+    val request = AppAuth.getInstance().data.value?.token?.let {
+        chain.request()
+            .newBuilder()
+            .addHeader("Authorization", it)
+            .build()
+    } ?: chain.request()
+
+    chain.proceed(request)
+}
+
 private val client = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .addInterceptor(logging)
+    .addInterceptor(authInterceptor)
     .build()
 
 private val retrofit = Retrofit.Builder()
