@@ -4,14 +4,18 @@
     <string name="channel_remote_description">Notifications from remote server</string>
     <string name="channel_remote_name">Server notifications</string>
     <string name="chooser_share_post">Share post</string>
+    <string name="clear">Clear</string>
     <string name="description_add_post" translatable="false" />
     <string name="description_background_video" translatable="false" />
     <string name="description_bottom_line_edit" translatable="false" />
     <string name="description_cancel" translatable="false" />
     <string name="description_edit" translatable="false" />
+    <string name="description_image_full_screen" translatable="false" />
     <string name="description_like" translatable="false" />
     <string name="description_liked" translatable="false" />
     <string name="description_more_vert" translatable="false" />
+    <string name="description_photo" translatable="false" />
+    <string name="description_pick_photo" translatable="false" />
     <string name="description_play" translatable="false" />
     <string name="description_post_attachment" translatable="false" />
     <string name="description_post_author_avatar" translatable="false" />
@@ -19,6 +23,7 @@
     <string name="description_save" translatable="false" />
     <string name="description_save_post" translatable="false" />
     <string name="description_share" translatable="false" />
+    <string name="description_take_photo" translatable="false" />
     <string name="description_view" translatable="false" />
     <string name="edit_message">Edit Message</string>
     <string name="empty_content_error">Content is empty</string>
@@ -36,5 +41,6 @@
     <string name="post_menu_edit">Edit</string>
     <string name="post_menu_remove">Remove</string>
     <string name="retry_loading">Retry</string>
+    <string name="save">Save</string>
 
 </resources>

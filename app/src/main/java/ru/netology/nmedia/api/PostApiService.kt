@@ -1,17 +1,28 @@
 package ru.netology.nmedia.api
 
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
+import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
 import java.util.concurrent.TimeUnit
 
 private const val BASE_URL = "http://10.0.2.2:9999/api/slow/"
 
+private val logging = HttpLoggingInterceptor().apply {
+    if (BuildConfig.DEBUG) {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+}
+
 private val client = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
+    .addInterceptor(logging)
     .build()
 
 private val retrofit = Retrofit.Builder()
@@ -41,6 +52,13 @@ interface PostsApiService {
 
     @DELETE("posts/{id}")
     suspend fun removeById(@Path("id") id: Long): Response<Unit>
+
+    @Multipart
+    @POST("media")
+    suspend fun uploadPhoto(
+        @Part part: MultipartBody.Part,
+        @Part content: MultipartBody.Part,
+    ): Response<Media>
 }
 
 object PostsApi {
