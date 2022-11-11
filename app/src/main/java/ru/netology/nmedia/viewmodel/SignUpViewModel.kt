@@ -21,7 +21,7 @@ class SignUpViewModel : ViewModel() {
     val state: LiveData<FeedModelState>
         get() = _state
 
-    fun registrationUser(login: String?, password: String?, name: String?) {
+    fun registrationUser(login: String, password: String, name: String) {
         viewModelScope.launch {
             try {
                 val user = repository.registrationUser(login, password, name)

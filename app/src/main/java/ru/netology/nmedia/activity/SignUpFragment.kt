@@ -27,7 +27,7 @@ class SignUpFragment : Fragment() {
 
         viewModel.data.observe(viewLifecycleOwner) {
             AppAuth.getInstance().setAuth(it.id, it.token)
-            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
 
         viewModel.state.observe(viewLifecycleOwner) { state ->

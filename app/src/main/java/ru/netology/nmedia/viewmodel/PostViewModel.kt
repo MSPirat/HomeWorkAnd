@@ -9,7 +9,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import ru.netology.nmedia.api.PostsApi
+import ru.netology.nmedia.api.Api
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.MediaUpload
@@ -40,17 +40,18 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: PostRepository =
         PostRepositoryImpl(AppDb.getInstance(application).postDao())
 
-    val data: LiveData<FeedModel> = AppAuth.getInstance().data.map {
-        it?.id ?: 0L
-    }.flatMapLatest { id ->
-        repository.data
-            .map {
-                FeedModel(
-                    it.map { post ->
-                        post.copy(ownedByMe = post.authorId == id)
-                    }, it.isEmpty())
-            }
-    }
+    val data: LiveData<FeedModel> = AppAuth.getInstance()
+        .data.map {
+            it?.id ?: 0L
+        }.flatMapLatest { id ->
+            repository.data
+                .map {
+                    FeedModel(
+                        it.map { post ->
+                            post.copy(ownedByMe = post.authorId == id)
+                        }, it.isEmpty())
+                }
+        }
         .asLiveData(Dispatchers.Default)
 
     private val edited = MutableLiveData(empty)
@@ -114,7 +115,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 if (post != null) {
-                    PostsApi.service.save(post)
+                    Api.service.save(post)
                     loadPosts()
                 }
             } catch (e: Exception) {

@@ -21,7 +21,7 @@ class SignInViewModel : ViewModel() {
     val state: LiveData<FeedModelState>
         get() = _state
 
-    fun loginAttempt(login: String?, password: String?) {
+    fun loginAttempt(login: String, password: String) {
         viewModelScope.launch {
             try {
                 val user = repository.authUser(login, password)

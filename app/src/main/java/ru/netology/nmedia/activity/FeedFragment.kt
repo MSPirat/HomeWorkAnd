@@ -45,8 +45,7 @@ class FeedFragment : Fragment() {
                     else
                         viewModel.likeById(post.id)
                 } else
-//                    viewModel.loadPosts()
-                    findNavController().navigate(R.id.action_feedFragment_to_signUpFragment)
+                    findNavController().navigate(R.id.action_feedFragment_to_signInFragment)
             }
 
             override fun onRemove(post: Post) {
