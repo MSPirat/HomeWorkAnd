@@ -1,5 +1,6 @@
 package ru.netology.nmedia.api
 
+import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,11 +9,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.User
 import java.util.concurrent.TimeUnit
 
-private const val BASE_URL = "http://10.0.2.2:9999/api/slow/"
+private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
 
 private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
@@ -20,9 +23,21 @@ private val logging = HttpLoggingInterceptor().apply {
     }
 }
 
+private val authInterceptor = Interceptor { chain ->
+    val request = AppAuth.getInstance().data.value?.token?.let {
+        chain.request()
+            .newBuilder()
+            .addHeader("Authorization", it)
+            .build()
+    } ?: chain.request()
+
+    chain.proceed(request)
+}
+
 private val client = OkHttpClient.Builder()
     .connectTimeout(30, TimeUnit.SECONDS)
     .addInterceptor(logging)
+    .addInterceptor(authInterceptor)
     .build()
 
 private val retrofit = Retrofit.Builder()
@@ -31,7 +46,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface PostsApiService {
+interface ApiService {
     @GET("posts")
     suspend fun getAll(): Response<List<Post>>
 
@@ -59,10 +74,25 @@ interface PostsApiService {
         @Part part: MultipartBody.Part,
         @Part content: MultipartBody.Part,
     ): Response<Media>
+
+    @FormUrlEncoded
+    @POST("users/authentication")
+    suspend fun updateUser(
+        @Field("login") login: String,
+        @Field("pass") pass: String,
+    ): Response<User>
+
+    @FormUrlEncoded
+    @POST("users/registration")
+    suspend fun registrationUser(
+        @Field("login") login: String,
+        @Field("pass") pass: String,
+        @Field("name") name: String,
+    ): Response<User>
 }
 
-object PostsApi {
-    val service: PostsApiService by lazy {
-        retrofit.create(PostsApiService::class.java)
+object Api {
+    val service: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
     }
 }

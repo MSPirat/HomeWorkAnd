@@ -3,12 +3,11 @@ package ru.netology.nmedia.viewmodel
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import ru.netology.nmedia.api.PostsApi
+import ru.netology.nmedia.api.Api
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
@@ -25,6 +24,7 @@ private val empty = Post(
     id = 0,
     content = "",
     author = "",
+    authorId = 0L,
     authorAvatar = "",
     likedByMe = false,
     likes = 0,
@@ -37,14 +37,28 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: PostRepository =
         PostRepositoryImpl(AppDb.getInstance(application).postDao())
 
-    val data: LiveData<FeedModel> = repository.data.map { FeedModel(it, it.isEmpty()) }
+    @ExperimentalCoroutinesApi
+    val data: LiveData<FeedModel> = AppAuth.getInstance()
+        .data.map {
+            it?.id ?: 0L
+        }.flatMapLatest { id ->
+            repository.data
+                .map {
+                    FeedModel(
+                        it.map { post ->
+                            post.copy(ownedByMe = post.authorId == id)
+                        }, it.isEmpty())
+                }
+        }
         .asLiveData(Dispatchers.Default)
+
     private val edited = MutableLiveData(empty)
 
     private val _state = MutableLiveData<FeedModelState>()
     val state: LiveData<FeedModelState>
         get() = _state
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val newerCount: LiveData<Int> = data.switchMap {
         repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
             .asLiveData(Dispatchers.Default)
@@ -100,7 +114,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 if (post != null) {
-                    PostsApi.service.save(post)
+                    Api.service.save(post)
                     loadPosts()
                 }
             } catch (e: Exception) {
