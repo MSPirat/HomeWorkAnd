@@ -29,9 +29,11 @@
     <string name="save">Сохранить</string>
     <string name="sign_in">Войти</string>
     <string name="sign_in_button">Вход</string>
-    <string name="sign_in_login">Логин</string>
     <string name="sign_in_name">Авторизация</string>
-    <string name="sign_in_password">Пароль</string>
+    <string name="sign_login">Логин</string>
+    <string name="sign_name_user">Имя пользователя</string>
+    <string name="sign_password">Пароль</string>
+    <string name="sign_repeat_password">Повтор пароля</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="sign_up_name">Регистрация</string>
     <string name="wrong_password">Неверный пароль. Поторите попытку</string>

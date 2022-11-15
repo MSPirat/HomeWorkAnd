@@ -11,12 +11,14 @@
     <dimen name="button_size">24dp</dimen>
     <dimen name="button_size_large">48dp</dimen>
 
-    <dimen name="sign_name_size">36sp</dimen>
-    <dimen name="button_text_size">14sp</dimen>
-    <dimen name="edit_text_size">12sp</dimen>
-
+    <dimen name="sign_spacing_bigger">200dp</dimen>
     <dimen name="sign_spacing_extra_large">128dp</dimen>
     <dimen name="sign_spacing_large">64dp</dimen>
     <dimen name="sign_spacing_medium">32dp</dimen>
+    <dimen name="sign_spacing_small">16dp</dimen>
+
+    <dimen name="sign_name_size">36sp</dimen>
+    <dimen name="button_text_size">14sp</dimen>
+    <dimen name="edit_text_size">12sp</dimen>
 
 </resources>

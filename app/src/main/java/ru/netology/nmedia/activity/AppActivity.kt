@@ -79,8 +79,8 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                             AppAuth.getInstance().removeAuth()
                             true
                         }
-//                        else -> false
-                        else -> onMenuItemSelected(menuItem)
+                        else -> false
+//                        else -> onMenuItemSelected(menuItem)
                     }
             }.apply {
                 currentMenuProvider = this

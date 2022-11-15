@@ -62,7 +62,7 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
                 it.copy(viewed = false)
             })
             emit(body.size)
-            delay(50_000L)
+            delay(100_000L)
         }
     }
         .catch { e -> throw AppError.from(e) }

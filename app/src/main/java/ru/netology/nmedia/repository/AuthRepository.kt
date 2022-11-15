@@ -12,9 +12,9 @@ class AuthRepository {
     suspend fun authUser(login: String, password: String): User {
         try {
             val response = Api.service.updateUser(login, password)
-            println(1)
+//            println(1)
             if (!response.isSuccessful) {
-                println("authorized")
+//                println("authorized")
                 throw ApiException(response.code(), response.message())
             }
             return response.body() ?: throw Exception()
@@ -28,9 +28,9 @@ class AuthRepository {
     suspend fun registrationUser(login: String, password: String, name: String): User {
         try {
             val response = Api.service.registrationUser(login, password, name)
-            println(2)
+//            println(2)
             if (!response.isSuccessful) {
-                println("register")
+//                println("register")
                 throw ApiException(response.code(), response.message())
             }
             return response.body() ?: throw Exception()

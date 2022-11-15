@@ -37,10 +37,10 @@ class SignInFragment : Fragment() {
         with(binding) {
             login.requestFocus()
             signInButton.setOnClickListener {
-                println("pushed button")
+//                println("pushed button")
                 viewModel.loginAttempt(
-                    login.text.toString(),
-                    password.text.toString()
+                    login.editText?.text.toString(),
+                    password.editText?.text.toString()
                 )
             }
         }
