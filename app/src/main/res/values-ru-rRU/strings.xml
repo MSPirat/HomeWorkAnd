@@ -19,6 +19,7 @@
     <string name="name">Имя</string>
     <string name="new_posts">Свежие записи</string>
     <string name="notification_user_liked">Пользователь %1$s поставил лайк посту %2$s</string>
+    <string name="notification_user_login">Вошел пользователь под номером %1$s</string>
     <string name="notification_user_new_posted">%1$s опубликовал новый пост</string>
     <string name="post_input_text_hint">Введите текст поста</string>
     <string name="post_menu_remove">Удалить</string>

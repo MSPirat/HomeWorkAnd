@@ -12,6 +12,7 @@ import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.dto.PushToken
 import ru.netology.nmedia.dto.User
 import java.util.concurrent.TimeUnit
 
@@ -24,7 +25,7 @@ private val logging = HttpLoggingInterceptor().apply {
 }
 
 private val authInterceptor = Interceptor { chain ->
-    val request = AppAuth.getInstance().data.value?.token?.let {
+    val request = AppAuth.getInstance().authStateFlow.value.token?.let {
         chain.request()
             .newBuilder()
             .addHeader("Authorization", it)
@@ -47,6 +48,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface ApiService {
+    @POST("users/push-tokens")
+    suspend fun sendPushToken(@Body pushToken: PushToken): Response<Unit>
+
     @GET("posts")
     suspend fun getAll(): Response<List<Post>>
 

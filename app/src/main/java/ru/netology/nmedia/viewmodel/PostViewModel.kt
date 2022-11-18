@@ -39,8 +39,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     @ExperimentalCoroutinesApi
     val data: LiveData<FeedModel> = AppAuth.getInstance()
-        .data.map {
-            it?.id ?: 0L
+        .authStateFlow.map {
+            it.id
         }.flatMapLatest { id ->
             repository.data
                 .map {
