@@ -462,4 +462,24 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
 3\. Происходит сохранение в `AppAuth`.  
     
 </details>
+
+#### Домашнее задание к занятию «4.3. Рассылка и приём push-уведомлений»
+
+<details close><summary> Задача RecipientId </summary>
+    <br>
+    
+Реализована проверка `recipientId` при получении push-уведомления с сервера.
+
+Для тестирования при помощи ***Postman*** отправлялся запрос вида:
+
+```http request
+POST http://localhost:9999/api/pushes?token=<--- Used TOKEN is set here --->
+Content-Type: application/json
+{
+  "recipientId": null,
+  "content": "Hello !!!"
+}
+```
+
+</details>
     </details>
