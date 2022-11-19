@@ -10,10 +10,8 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.nmedia.R
-import ru.netology.nmedia.service.notifications.Action
-import ru.netology.nmedia.service.notifications.Like
-import ru.netology.nmedia.service.notifications.NewPost
-import ru.netology.nmedia.service.notifications.Notification
+import ru.netology.nmedia.auth.AppAuth
+import ru.netology.nmedia.service.notifications.*
 import kotlin.random.Random
 
 class FCMService : FirebaseMessagingService() {
@@ -36,7 +34,15 @@ class FCMService : FirebaseMessagingService() {
         }
     }
 
+    override fun onNewToken(token: String) {
+        println(token)
+        AppAuth.getInstance().sendPushToken(token)
+    }
+
     override fun onMessageReceived(message: RemoteMessage) {
+
+        val push = gson.fromJson(message.data[content], Push::class.java)
+        val someId = AppAuth.getInstance().authStateFlow.value.id
 
         try {
             message.data[action]?.let {
@@ -58,10 +64,29 @@ class FCMService : FirebaseMessagingService() {
         } catch (error: IllegalArgumentException) {
             errorNotification(gson.fromJson(message.data[content], Notification::class.java))
         }
+
+        when (push.recipientId) {
+            someId, null -> {
+                sendNotification(push)
+            }
+            else -> AppAuth.getInstance().sendPushToken()
+        }
     }
 
-    override fun onNewToken(token: String) {
-        println(token)
+    private fun sendNotification(push: Push) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_login,
+                    push.content
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
     }
 
     private fun errorNotification(content: Notification) {
