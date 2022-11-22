@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.kapt'
     id 'com.google.gms.google-services'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -42,6 +43,7 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 }
 
@@ -70,6 +72,7 @@ dependencies {
     def imagepicker_version = "2.1"
     def fragment_version = "1.5.4"
     def play_services_base_version = "18.1.0"
+    def hilt_version = "2.38.1"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core-ktx:$core_version"
@@ -98,6 +101,9 @@ dependencies {
     implementation "com.github.dhaval2404:imagepicker:$imagepicker_version"
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
