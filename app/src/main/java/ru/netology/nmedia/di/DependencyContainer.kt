@@ -40,7 +40,7 @@ class DependencyContainer(
         }
     }
 
-    private val appAuth = AppAuth(context)
+    val appAuth = AppAuth(context)
 
     private val authInterceptor = Interceptor { chain ->
         val request = appAuth.authStateFlow.value.token?.let {
@@ -70,6 +70,10 @@ class DependencyContainer(
         .build()
 
     val apiService = retrofit.create<ApiService>()
+
+    val service: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
 
     private val postDao = appDb.postDao()
 

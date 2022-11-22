@@ -12,11 +12,23 @@ import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentSignUpBinding
+import ru.netology.nmedia.di.DependencyContainer
 import ru.netology.nmedia.viewmodel.SignUpViewModel
+import ru.netology.nmedia.viewmodel.ViewModelFactory
 
 class SignUpFragment : Fragment() {
 
-    private val viewModel: SignUpViewModel by viewModels(ownerProducer = ::requireParentFragment)
+    private val dependencyContainer = DependencyContainer.getInstance()
+
+    private val viewModel: SignUpViewModel by viewModels(
+        ownerProducer = ::requireParentFragment,
+        factoryProducer = {
+            ViewModelFactory(
+                dependencyContainer.repository,
+                dependencyContainer.appAuth
+            )
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +38,7 @@ class SignUpFragment : Fragment() {
         val binding = FragmentSignUpBinding.inflate(inflater, container, false)
 
         viewModel.data.observe(viewLifecycleOwner) {
-            AppAuth.getInstance().setAuth(it.id, it.token)
+            dependencyContainer.appAuth.setAuth(it.id, it.token)
             findNavController().navigateUp()
         }
 

@@ -11,6 +11,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
+import ru.netology.nmedia.di.DependencyContainer
 import ru.netology.nmedia.service.notifications.*
 import kotlin.random.Random
 
@@ -36,13 +37,13 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         println(token)
-        AppAuth.getInstance().sendPushToken(token)
+        DependencyContainer.getInstance().appAuth.sendPushToken(token)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
 
         val push = gson.fromJson(message.data[content], Push::class.java)
-        val someId = AppAuth.getInstance().authStateFlow.value.id
+        val someId = DependencyContainer.getInstance().appAuth.authStateFlow.value.id
 
         try {
             message.data[action]?.let {
@@ -69,7 +70,7 @@ class FCMService : FirebaseMessagingService() {
             someId, null -> {
                 sendNotification(push)
             }
-            else -> AppAuth.getInstance().sendPushToken()
+            else -> DependencyContainer.getInstance().appAuth.sendPushToken()
         }
     }
 

@@ -1,6 +1,6 @@
 package ru.netology.nmedia.repository
 
-import ru.netology.nmedia.api.Api
+import ru.netology.nmedia.di.DependencyContainer
 import ru.netology.nmedia.dto.User
 import ru.netology.nmedia.errors.ApiException
 import ru.netology.nmedia.errors.NetworkException
@@ -11,7 +11,7 @@ class AuthRepository {
 
     suspend fun authUser(login: String, password: String): User {
         try {
-            val response = Api.service.updateUser(login, password)
+            val response = DependencyContainer.getInstance().service.updateUser(login, password)
 //            println(1)
             if (!response.isSuccessful) {
 //                println("authorized")
@@ -27,7 +27,7 @@ class AuthRepository {
 
     suspend fun registrationUser(login: String, password: String, name: String): User {
         try {
-            val response = Api.service.registrationUser(login, password, name)
+            val response = DependencyContainer.getInstance().service.registrationUser(login, password, name)
 //            println(2)
             if (!response.isSuccessful) {
 //                println("register")

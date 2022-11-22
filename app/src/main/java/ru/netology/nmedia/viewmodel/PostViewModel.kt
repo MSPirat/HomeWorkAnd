@@ -1,21 +1,18 @@
 package ru.netology.nmedia.viewmodel
 
-import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ru.netology.nmedia.api.Api
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.db.AppDb
+import ru.netology.nmedia.di.DependencyContainer
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.RetryTypes
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
@@ -32,13 +29,13 @@ private val empty = Post(
     attachment = null
 )
 
-class PostViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository: PostRepository =
-        PostRepositoryImpl(AppDb.getInstance(application).postDao())
+class PostViewModel(
+    private val repository: PostRepository,
+    appAuth: AppAuth,
+) : ViewModel() {
 
     @ExperimentalCoroutinesApi
-    val data: LiveData<FeedModel> = AppAuth.getInstance()
+    val data: LiveData<FeedModel> = appAuth
         .authStateFlow.map {
             it.id
         }.flatMapLatest { id ->
@@ -114,7 +111,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 if (post != null) {
-                    Api.service.save(post)
+                    DependencyContainer.getInstance().service.save(post)
                     loadPosts()
                 }
             } catch (e: Exception) {
