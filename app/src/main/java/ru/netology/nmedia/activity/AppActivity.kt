@@ -13,24 +13,20 @@ import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.di.DependencyContainer
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.viewmodel.AuthViewModel
-import ru.netology.nmedia.viewmodel.ViewModelFactory
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
-    private val dependencyContainer = DependencyContainer.getInstance()
+    @Inject
+    lateinit var appAuth: AppAuth
 
-    private val viewModel by viewModels<AuthViewModel>(
-        factoryProducer = {
-            ViewModelFactory(
-                dependencyContainer.repository,
-                dependencyContainer.appAuth
-            )
-        }
-    )
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,17 +72,17 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
                     when (menuItem.itemId) {
                         R.id.signIn -> {
-//                            dependencyContainer.appAuth.setAuth(5, "x-token")
+//                            appAuth.setAuth(5, "x-token")
                             findNavController(R.id.navigation).navigate(R.id.action_feedFragment_to_signInFragment)
                             true
                         }
                         R.id.signUp -> {
-//                            dependencyContainer.appAuth.setAuth(5, "x-token")
+//                            appAuth.setAuth(5, "x-token")
                             findNavController(R.id.navigation).navigate(R.id.action_feedFragment_to_signUpFragment)
                             true
                         }
                         R.id.logout -> {
-                            dependencyContainer.appAuth.removeAuth()
+                            appAuth.removeAuth()
                             true
                         }
                         else -> false

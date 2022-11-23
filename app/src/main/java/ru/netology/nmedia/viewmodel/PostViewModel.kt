@@ -2,11 +2,17 @@ package ru.netology.nmedia.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.*
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.di.DependencyContainer
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
@@ -16,6 +22,8 @@ import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.util.RetryTypes
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private val empty = Post(
     id = 0,
@@ -29,12 +37,15 @@ private val empty = Post(
     attachment = null
 )
 
-class PostViewModel(
+@HiltViewModel
+@ExperimentalCoroutinesApi
+@Singleton
+class PostViewModel @Inject constructor(
     private val repository: PostRepository,
-    appAuth: AppAuth,
+    @ApplicationContext
+    private val appAuth: AppAuth,
 ) : ViewModel() {
 
-    @ExperimentalCoroutinesApi
     val data: LiveData<FeedModel> = appAuth
         .authStateFlow.map {
             it.id
@@ -55,7 +66,6 @@ class PostViewModel(
     val state: LiveData<FeedModelState>
         get() = _state
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val newerCount: LiveData<Int> = data.switchMap {
         repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
             .asLiveData(Dispatchers.Default)
@@ -107,11 +117,19 @@ class PostViewModel(
         _photo.value = withoutPhoto
     }
 
+    @InstallIn(SingletonComponent::class)
+    @EntryPoint
+    interface PostViewModelEntryPoint {
+        fun getApiService(): ApiService
+    }
+
     fun retrySave(post: Post?) {
         viewModelScope.launch {
             try {
                 if (post != null) {
-                    DependencyContainer.getInstance().service.save(post)
+                    val entryPoint =
+                        EntryPointAccessors.fromApplication(appAuth, PostViewModelEntryPoint::class.java)
+                    entryPoint.getApiService().save(post)
                     loadPosts()
                 }
             } catch (e: Exception) {
