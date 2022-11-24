@@ -1,4 +1,4 @@
-package ru.netology.nmedia.repository.di
+package ru.netology.nmedia.module
 
 import dagger.Binds
 import dagger.Module

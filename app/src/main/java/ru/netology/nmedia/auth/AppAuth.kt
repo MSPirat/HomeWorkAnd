@@ -1,7 +1,9 @@
 package ru.netology.nmedia.auth
 
 import android.content.Context
-import com.google.firebase.messaging.FirebaseMessaging
+import android.content.SharedPreferences
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -21,8 +23,9 @@ import javax.inject.Singleton
 
 @Singleton
 class AppAuth @Inject constructor(
+
     @ApplicationContext
-    private val context: Context
+    private val context: Context,
 ) {
     private val prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
     private val idKey = "id"
@@ -78,7 +81,7 @@ class AppAuth @Inject constructor(
     fun sendPushToken(token: String? = null) {
         CoroutineScope(Dispatchers.Default).launch {
             try {
-                val pushToken = PushToken(token ?: FirebaseMessaging.getInstance().token.await())
+                val pushToken = PushToken(token ?: Firebase.messaging.token.await())
                 val entryPoint =
                     EntryPointAccessors.fromApplication(context, AppAuthEntryPoint::class.java)
                 entryPoint.getApiService().sendPushToken(pushToken)

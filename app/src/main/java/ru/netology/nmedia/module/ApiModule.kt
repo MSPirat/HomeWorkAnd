@@ -1,4 +1,4 @@
-package ru.netology.nmedia.api
+package ru.netology.nmedia.module
 
 import dagger.Module
 import dagger.Provides
@@ -10,6 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import ru.netology.nmedia.BuildConfig
+import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.auth.AppAuth
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -20,7 +21,6 @@ class ApiModule {
 
     companion object {
         private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
-
     }
 
     @Provides
