@@ -1,17 +1,19 @@
 package ru.netology.nmedia.repository
 
-import ru.netology.nmedia.api.Api
+import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.User
 import ru.netology.nmedia.errors.ApiException
 import ru.netology.nmedia.errors.NetworkException
 import ru.netology.nmedia.errors.UnknownException
 import java.io.IOException
+import javax.inject.Inject
 
-class AuthRepository {
-
+class AuthRepository @Inject constructor(
+    private val api: ApiService,
+) {
     suspend fun authUser(login: String, password: String): User {
         try {
-            val response = Api.service.updateUser(login, password)
+            val response = api.updateUser(login, password)
 //            println(1)
             if (!response.isSuccessful) {
 //                println("authorized")
@@ -27,7 +29,7 @@ class AuthRepository {
 
     suspend fun registrationUser(login: String, password: String, name: String): User {
         try {
-            val response = Api.service.registrationUser(login, password, name)
+            val response = api.registrationUser(login, password, name)
 //            println(2)
             if (!response.isSuccessful) {
 //                println("register")

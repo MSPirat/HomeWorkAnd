@@ -1,24 +1,22 @@
 package ru.netology.nmedia.viewmodel
 
-import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import ru.netology.nmedia.api.Api
 import ru.netology.nmedia.auth.AppAuth
-import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.RetryTypes
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.File
+import javax.inject.Inject
 
 private val empty = Post(
     id = 0,
@@ -32,13 +30,14 @@ private val empty = Post(
     attachment = null
 )
 
-class PostViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+@OptIn(ExperimentalCoroutinesApi::class)
+class PostViewModel @Inject constructor(
+    private val repository: PostRepository,
+    appAuth: AppAuth,
+) : ViewModel() {
 
-    private val repository: PostRepository =
-        PostRepositoryImpl(AppDb.getInstance(application).postDao())
-
-    @ExperimentalCoroutinesApi
-    val data: LiveData<FeedModel> = AppAuth.getInstance()
+    val data: LiveData<FeedModel> = appAuth
         .authStateFlow.map {
             it.id
         }.flatMapLatest { id ->
@@ -58,7 +57,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     val state: LiveData<FeedModelState>
         get() = _state
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val newerCount: LiveData<Int> = data.switchMap {
         repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
             .asLiveData(Dispatchers.Default)
@@ -114,12 +112,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 if (post != null) {
-                    Api.service.save(post)
+                    save()
                     loadPosts()
                 }
             } catch (e: Exception) {
                 _state.value =
-                    FeedModelState(error = true, retryType = RetryTypes.SAVE, retryPost = post)
+                    FeedModelState(error = true, retryPost = post)
             }
         }
     }
