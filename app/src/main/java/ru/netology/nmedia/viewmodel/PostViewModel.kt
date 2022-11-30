@@ -2,14 +2,17 @@ package ru.netology.nmedia.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.map
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.model.PhotoModel
 import ru.netology.nmedia.repository.PostRepository
@@ -37,19 +40,18 @@ class PostViewModel @Inject constructor(
     appAuth: AppAuth,
 ) : ViewModel() {
 
-    val data: LiveData<FeedModel> = appAuth
+    val data: Flow<PagingData<Post>> = appAuth
         .authStateFlow.map {
             it.id
         }.flatMapLatest { id ->
             repository.data
                 .map {
-                    FeedModel(
-                        it.map { post ->
-                            post.copy(ownedByMe = post.authorId == id)
-                        }, it.isEmpty())
+                    it.map { post ->
+                        post.copy(ownedByMe = post.authorId == id)
+                    }
                 }
         }
-        .asLiveData(Dispatchers.Default)
+        .flowOn(Dispatchers.Default)
 
     private val edited = MutableLiveData(empty)
 
@@ -57,10 +59,10 @@ class PostViewModel @Inject constructor(
     val state: LiveData<FeedModelState>
         get() = _state
 
-    val newerCount: LiveData<Int> = data.switchMap {
-        repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
-            .asLiveData(Dispatchers.Default)
-    }
+//    val newerCount: LiveData<Int> = data.switchMap {
+//        repository.getNewerCount(it.posts.firstOrNull()?.id ?: 0L)
+//            .asLiveData(Dispatchers.Default)
+//    }
 
     private val _postCreated = SingleLiveEvent<Unit>()
     val postCreated: LiveData<Unit>

@@ -8,10 +8,17 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChangedBy
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -28,6 +35,7 @@ class FeedFragment : Fragment() {
 
     private val viewModelAuth: AuthViewModel by viewModels()
 
+    @ExperimentalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,10 +43,14 @@ class FeedFragment : Fragment() {
     ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
+        val bundle = Bundle()
+
         val adapter = PostsAdapter(object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+                bundle.putString("content", post.content)
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment, bundle)
             }
 
             override fun onLike(post: Post) {
@@ -68,7 +80,7 @@ class FeedFragment : Fragment() {
             }
 
             override fun onImage(image: String) {
-                val bundle = Bundle().apply {
+                bundle.apply {
                     putString("image", image)
                 }
                 findNavController().navigate(
@@ -79,9 +91,10 @@ class FeedFragment : Fragment() {
 
         binding.container.adapter = adapter
 
-        viewModel.data.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.posts)
-            binding.emptyText.isVisible = state.empty
+        lifecycleScope.launchWhenCreated {
+            viewModel.data.collectLatest {
+                adapter.submitData(it)
+            }
         }
 
         viewModel.state.observe(viewLifecycleOwner) { state ->
@@ -107,12 +120,25 @@ class FeedFragment : Fragment() {
             }
         }
 
-        viewModel.newerCount.observe(viewLifecycleOwner) {
-            if (it > 0) {
-                binding.newPosts.text = getString(R.string.new_posts)
-                binding.newPosts.visibility = View.VISIBLE
+//        viewModel.newerCount.observe(viewLifecycleOwner) {
+//            if (it > 0) {
+//                binding.newPosts.text = getString(R.string.new_posts)
+//                binding.newPosts.visibility = View.VISIBLE
+//            }
+//            println("Newer count: $it")
+//        }
+
+        lifecycleScope.launchWhenCreated {
+            adapter.loadStateFlow.collectLatest {
+                binding.swipeRefresh.isRefreshing =
+                    it.prepend is LoadState.Loading ||
+                            it.append is LoadState.Loading ||
+                            it.refresh is LoadState.Loading
             }
-            println("Newer count: $it")
+        }
+
+        viewModelAuth.data.observe(viewLifecycleOwner) {
+            adapter.refresh()
         }
 
         binding.newPosts.setOnClickListener {
@@ -122,9 +148,9 @@ class FeedFragment : Fragment() {
 
         }
 
-        binding.retryButton.setOnClickListener {
-            viewModel.loadPosts()
-        }
+//        binding.retryButton.setOnClickListener {
+//            viewModel.loadPosts()
+//        }
 
         binding.addPost.setOnClickListener {
             if (viewModelAuth.authorized) {
@@ -137,7 +163,24 @@ class FeedFragment : Fragment() {
         )
 
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.loadPosts()
+//            viewModel.loadPosts()
+            adapter.refresh()
+            binding.newPosts.visibility = View.GONE
+        }
+
+        lifecycleScope.launch {
+            val scrollingTop = adapter
+                .loadStateFlow
+                .distinctUntilChangedBy {
+                    it.source.refresh
+                }
+                .map {
+                    it.source.refresh is LoadState.NotLoading
+                }
+
+            scrollingTop.collectLatest { scrolling ->
+                if (scrolling) binding.container.scrollToPosition(0)
+            }
         }
         return binding.root
     }
