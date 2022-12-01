@@ -280,7 +280,7 @@ open_book:  [Buttons](https://material.io/develop/android/components/buttons).
     Текст поста... (на несколько строк)
 
 </details>
-</details>
+    </details>
 
 *****
 
@@ -482,4 +482,47 @@ Content-Type: application/json
 ```
 
 </details>
+    </details>
+
+
+*****
+
+<details close><summary> HomeWorkAndAd (Block 3) </summary>
+    <br>
+    
+#### Домашнее задание к занятию «1.1. Dependency Injection»
+
+<details close><summary> Задача Dagger Hilt</summary>
+    <br>
+    
+Призведена миграция проекта на **Dagger Hilt**.
+
+</details>  
+
+<details close><summary> Задача Singletons</summary>
+    <br>
+
+В приложении с лекции в `MainActivity` используются следующие конструкции:
+
+```kotlin
+FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+    ...
+}
+with(GoogleApiAvailability.getInstance()) {
+    ...
+}
+```
+
+Заменены вызовы `getInstance` на ***Dependency Injection***.
+
+</details> 
+
+#### Домашнее задание к занятию «1.2. Architecture Components. Часть 1»
+
+<details close><summary> Задача Refresh on Login/Logout</summary>
+    <br>
+    
+Внесены изменения для реализации запросов с сервера заново при произведении `login/logout`.
+
+</details>  
     </details>
