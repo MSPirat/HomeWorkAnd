@@ -43,6 +43,9 @@ interface PostDao {
     @Query("UPDATE PostEntity SET viewed = 0 WHERE viewed = 1")
     suspend fun viewedPosts()
 
+    @Query("DELETE FROM PostEntity")
+    suspend fun clear()
+
     fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
     fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
 }
