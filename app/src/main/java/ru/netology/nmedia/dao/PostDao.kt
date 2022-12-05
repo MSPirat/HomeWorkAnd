@@ -6,13 +6,10 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 
 @Dao
 interface PostDao {
-//    @Query("SELECT * FROM PostEntity WHERE viewed = 0 ORDER BY id DESC")
-//    fun getAll(): Flow<List<PostEntity>>
 
     @Query("SELECT * FROM PostEntity WHERE viewed = 0 ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
@@ -49,6 +46,6 @@ interface PostDao {
     @Query("DELETE FROM PostEntity")
     suspend fun clear()
 
-    fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
-    fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
+//    fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
+//    fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
 }

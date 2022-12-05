@@ -13,7 +13,7 @@ interface ApiService {
     suspend fun sendPushToken(@Body pushToken: PushToken): Response<Unit>
 
     @GET("posts")
-    suspend fun etAll(): Response<List<Post>>
+    suspend fun getAll(): Response<List<Post>>
 
     @GET("posts/latest")
     suspend fun getLatest(@Query("count") count: Int): Response<List<Post>>
