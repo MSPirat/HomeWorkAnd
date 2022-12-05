@@ -26,6 +26,7 @@
     <string name="post_menu_edit">Редактировать</string>
     <string name="registration">Зарегистрироваться</string>
     <string name="repeat_enter_password">Повтор пароля</string>
+    <string name="retry">Повтор</string>
     <string name="retry_loading">Повторить</string>
     <string name="save">Сохранить</string>
     <string name="sign_in">Войти</string>
