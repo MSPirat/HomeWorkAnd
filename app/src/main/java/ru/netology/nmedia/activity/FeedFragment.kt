@@ -139,9 +139,9 @@ class FeedFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest {
                 binding.swipeRefresh.isRefreshing =
-                    it.prepend is LoadState.Loading ||
-                            it.append is LoadState.Loading ||
-                            it.refresh is LoadState.Loading
+//                    it.prepend is LoadState.Loading ||
+//                            it.append is LoadState.Loading ||
+                    it.refresh is LoadState.Loading
             }
         }
 
@@ -170,11 +170,11 @@ class FeedFragment : Fragment() {
             android.R.color.holo_blue_dark
         )
 
-        binding.swipeRefresh.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener(
 //            viewModel.loadPosts()
-            adapter.refresh()
-            binding.newPosts.visibility = View.GONE
-        }
+            adapter::refresh
+//            binding.newPosts.visibility = View.GONE
+        )
 
         lifecycleScope.launch {
             val scrollingTop = adapter
