@@ -12,6 +12,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import ru.netology.nmedia.dto.FeedItem
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.model.FeedModelState
@@ -41,7 +42,7 @@ class PostViewModel @Inject constructor(
 
     private val cached = repository.data.cachedIn(viewModelScope)
 
-    val data: Flow<PagingData<Post>> = cached
+    val data: Flow<PagingData<FeedItem>> = cached
 
     private val edited = MutableLiveData(empty)
 

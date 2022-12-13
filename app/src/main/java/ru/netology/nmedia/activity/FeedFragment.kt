@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
+import ru.netology.nmedia.adapter.PostLoadingStateAdapter
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
@@ -89,7 +90,14 @@ class FeedFragment : Fragment() {
             }
         })
 
-        binding.container.adapter = adapter
+        binding.container.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = PostLoadingStateAdapter {
+                adapter.retry()
+            },
+            footer = PostLoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
         lifecycleScope.launchWhenCreated {
             viewModel.data.collectLatest {
@@ -131,9 +139,9 @@ class FeedFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collectLatest {
                 binding.swipeRefresh.isRefreshing =
-                    it.prepend is LoadState.Loading ||
-                            it.append is LoadState.Loading ||
-                            it.refresh is LoadState.Loading
+//                    it.prepend is LoadState.Loading ||
+//                            it.append is LoadState.Loading ||
+                    it.refresh is LoadState.Loading
             }
         }
 
@@ -162,11 +170,11 @@ class FeedFragment : Fragment() {
             android.R.color.holo_blue_dark
         )
 
-        binding.swipeRefresh.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener(
 //            viewModel.loadPosts()
-            adapter.refresh()
-            binding.newPosts.visibility = View.GONE
-        }
+            adapter::refresh
+//            binding.newPosts.visibility = View.GONE
+        )
 
         lifecycleScope.launch {
             val scrollingTop = adapter
