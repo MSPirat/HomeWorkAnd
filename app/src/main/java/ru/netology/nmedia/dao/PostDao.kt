@@ -1,17 +1,21 @@
 package ru.netology.nmedia.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.entity.PostEntity
 
 @Dao
 interface PostDao {
+
     @Query("SELECT * FROM PostEntity WHERE viewed = 0 ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
+
+    @Query("SELECT * FROM PostEntity WHERE viewed = 0 ORDER BY id DESC")
+    fun getPagingSource(): PagingSource<Int, PostEntity>
 
     @Insert(onConflict = REPLACE)
     suspend fun insert(post: PostEntity)
@@ -39,6 +43,9 @@ interface PostDao {
     @Query("UPDATE PostEntity SET viewed = 0 WHERE viewed = 1")
     suspend fun viewedPosts()
 
-    fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
-    fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
+    @Query("DELETE FROM PostEntity")
+    suspend fun clear()
+
+//    fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
+//    fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)
 }
