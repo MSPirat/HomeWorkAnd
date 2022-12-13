@@ -517,7 +517,7 @@ with(GoogleApiAvailability.getInstance()) {
 
 </details> 
 
-#### Домашнее задание к занятию «1.2. Architecture Components. Часть 1»
+#### Домашнее задание к занятию «1.3. Architecture Components. Часть 2»
 
 <details close><summary> Задача Refresh on Login/Logout</summary>
     <br>
@@ -525,4 +525,31 @@ with(GoogleApiAvailability.getInstance()) {
 Внесены изменения для реализации запросов с сервера заново при произведении `login/logout`.
 
 </details>  
+
+
+#### Домашнее задание к занятию «1.2. Architecture Components. Часть 1»
+
+<details close><summary> Задача Refresh to Prepend </summary>
+    <br>
+    
+Произведены следующие изменения:
+
+   - Автоматический PREPEND отключен, т. е. при scroll к первому сверху элементу данные автоматически не подгружаются.
+   - REFRESH не затирает предыдущий кеш, а добавляет данные сверху, учитывая ID последнего поста сверху. 
+   - APPEND работает в обычном режиме.
+
+</details>
+
+#### Домашнее задание к занятию «1.4. RecyclerView — продвинутое использование»
+
+<details close><summary> Задача Paging Refresh, Prepend & Append </summary>
+    <br>
+    
+Использовав примеры с лекции и [Codelab](https://developer.android.com/codelabs/android-paging), посвящённую Paging, в код проекта добавлена, поддержка PREPEND, APPEND и REFRESH, следующего поведения:
+
+- Refreshing SwipeRefreshLayout отображается только при REFRESH.
+- При PREPEND первый элемент в RecyclerView - элемент с загрузкой.
+- При APPEND последний элемент в RecyclerView - элемент с загрузкой.
+
+</details>
     </details>
